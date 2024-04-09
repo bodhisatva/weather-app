@@ -1,4 +1,4 @@
-This is a React project boilerplate with ESLint and Prettier setup.
+This is a weather app.
 
 ## Getting Started
 
