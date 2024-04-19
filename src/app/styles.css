@@ -1,0 +1,9 @@
+body.container {
+  padding: 20px 50px;
+}
+
+.inlineRow {
+  width: 50%;
+  display: inline-flex;
+  flex-wrap: wrap;
+}

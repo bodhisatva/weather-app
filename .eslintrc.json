@@ -7,7 +7,8 @@
     "airbnb",
     "airbnb-typescript",
     "plugin:import/typescript",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,7 +18,10 @@
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
     "react/react-in-jsx-scope": "off",
-    "no-console": ["error", { "allow": ["warn", "error", "info"] }]
+    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
+    "react/function-component-definition": "off"
   }
 }
