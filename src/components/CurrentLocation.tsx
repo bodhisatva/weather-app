@@ -5,7 +5,8 @@ import { useLocationContext } from '@/context/LocationContext'
 import { useGetLocation } from './hooks/GetLocationData'
 
 export const CurrentLocation: FC = () => {
-  const { setUserLocationInfo, setUserLocationCoordinates, state } = useLocationContext()
+  const { setIsLoadingUserCoordinates, setUserLocationInfo, setUserLocationCoordinates, state } =
+    useLocationContext()
   const { userLocationCoordinates } = state
 
   const { loading, locationData } = useGetLocation(userLocationCoordinates)
@@ -13,7 +14,9 @@ export const CurrentLocation: FC = () => {
 
   const getUserLocationCoordinates = useCallback(() => {
     if (navigator.geolocation) {
+      setIsLoadingUserCoordinates(true)
       navigator.geolocation.getCurrentPosition(({ coords }) => {
+        setIsLoadingUserCoordinates(false)
         const { latitude: lat, longitude: lon } = coords
 
         setUserLocationCoordinates({ lat, lon })

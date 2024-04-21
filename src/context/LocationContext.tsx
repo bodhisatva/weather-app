@@ -8,6 +8,7 @@ export interface Location {
 }
 
 interface State {
+  isLoadingUserCoordinates: boolean
   userLocationCoordinates: Location | undefined
   userCity: string | undefined
   userCountry: string | undefined
@@ -16,6 +17,7 @@ interface State {
 
 interface ContextProps {
   state: State
+  setIsLoadingUserCoordinates: (loading: boolean) => void
   setUserLocationCoordinates: (coordinates: Location | undefined) => void
   setUserLocationInfo: (city: string, country: string) => void
   setSelectLocationCoordinates: (coordinates: Location | undefined) => void
@@ -25,6 +27,7 @@ const LocationContext = createContext<ContextProps | null>(null)
 
 export const LocationContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const defaultState = {
+    isLoadingUserCoordinates: false,
     userLocationCoordinates: undefined,
     userCity: undefined,
     userCountry: undefined,
@@ -32,6 +35,13 @@ export const LocationContextProvider: FC<PropsWithChildren<{}>> = ({ children })
   }
 
   const [state, setState] = useState<State>(defaultState)
+
+  const setIsLoadingUserCoordinates = (loading: boolean) => {
+    setState((prevState) => ({
+      ...prevState,
+      isLoadingUserCoordinates: loading
+    }))
+  }
 
   const setUserLocationCoordinates = (userLocationCoordinates: Location | undefined) => {
     setState((prevState) => ({
@@ -58,6 +68,7 @@ export const LocationContextProvider: FC<PropsWithChildren<{}>> = ({ children })
   const value = useMemo(
     () => ({
       state,
+      setIsLoadingUserCoordinates,
       setUserLocationCoordinates,
       setUserLocationInfo,
       setSelectLocationCoordinates

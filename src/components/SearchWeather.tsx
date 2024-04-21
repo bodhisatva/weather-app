@@ -30,7 +30,7 @@ export const SearchWeather: FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherData>()
 
   const { setSelectLocationCoordinates, setUserLocationInfo, state } = useLocationContext()
-  const { userLocationCoordinates } = state
+  const { userLocationCoordinates, isLoadingUserCoordinates } = state
 
   const fetchCityInfo = useCallback(async (value: string) => {
     try {
@@ -97,12 +97,13 @@ export const SearchWeather: FC = () => {
     handleSubmit(city)
   }
 
-  const renderComponent = !loading && weatherData
+  const renderComponent = !loading && !isLoadingUserCoordinates && weatherData
 
   return (
     <div>
       <div>
         <Select
+          isDisabled={loading || isLoadingUserCoordinates}
           options={cityOptions}
           value={selectedCity}
           onChange={(city) => onChangeHandler(city as CityData)}
@@ -114,7 +115,7 @@ export const SearchWeather: FC = () => {
       <br />
 
       <div>
-        {loading && <div>Loading...</div>}
+        {loading || (isLoadingUserCoordinates && <div>Loading...</div>)}
         {renderComponent && (
           <div className="inlineRow">
             <Weather weatherData={weatherData} />
