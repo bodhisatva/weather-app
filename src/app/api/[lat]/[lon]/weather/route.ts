@@ -8,7 +8,7 @@ interface Temperature {
   maxTemperature: string | null
 }
 
-interface Main {
+export interface Main {
   temp: number
   temp_min: number
   temp_max: number

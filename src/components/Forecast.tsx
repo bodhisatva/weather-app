@@ -44,12 +44,12 @@ export const Forecast: FC = () => {
         <>
           <h3 data-cy="forecast">Upcoming Days</h3>
           {forecastData.map(({ id, date, temperatures, rain }) => {
-            const { day, min, max } = temperatures
+            const { day: temperature, min, max } = temperatures
 
             return (
               <div data-cy="forecast-day" key={id}>
                 <h4>{date}</h4>
-                <h5> {day}</h5>
+                <h4> {temperature}</h4>
                 <div> Max: {min}</div>
                 <div> Min: {max}</div>
                 <div> {rain ? `Rain: ${rain} mm` : null}</div>
