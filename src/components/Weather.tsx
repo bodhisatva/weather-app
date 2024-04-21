@@ -18,8 +18,8 @@ export const Weather: FC<WeatherProps> = ({ weatherData }) => {
   return (
     <div>
       <div>
-        <h2>{temperature}</h2>
-        <h2>{userCity}</h2>
+        <h2 data-cy="current-temperature">{temperature}</h2>
+        <h2 data-cy="current-city">{userCity}</h2>
       </div>
       <h5>{weatherDescription}</h5>
       <div>Max: {maxTemperature} </div>

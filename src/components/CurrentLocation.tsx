@@ -41,7 +41,9 @@ export const CurrentLocation: FC = () => {
 
   return (
     <div>
-      <p>Your current location: {userLocation}</p>
+      <p>
+        Your current location: <span data-cy="current-location">{userLocation}</span>
+      </p>
     </div>
   )
 }
