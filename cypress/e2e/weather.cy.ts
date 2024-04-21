@@ -21,18 +21,16 @@ describe('Weather', () => {
   it('should show forecast for a selected city', () => {
     const city = 'Helsinki'
 
-    cy.get('#react-select-3-input').type(city)
-    cy.get('#react-select-3-input').type('{enter}')
+    cy.get("[type='text']").type(city).type('{enter}')
 
     cy.dataCy('forecast').should('be.visible')
     cy.dataCy('current-city').should('be.visible').and('contain.text', city)
   })
 
-  it('should show forecast for seven days', () => {
-    cy.get('#react-select-3-input').type('Muurame')
-    cy.get('#react-select-3-input').type('{enter}')
+  it('should show forecast for five days', () => {
+    cy.get("[type='text']").type('Muurame').type('{enter}')
 
     cy.dataCy('forecast').should('be.visible')
-    cy.dataCy('forecast-day').should('have.length', 7)
+    cy.dataCy('forecast-day').should('have.length', 5)
   })
 })
