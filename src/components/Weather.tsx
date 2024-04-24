@@ -1,11 +1,11 @@
 'use client'
 
 import { FC } from 'react'
-import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
-import { useLocationContext } from '@/context/LocationContext'
 import MaxTempIcon from 'public/max-temp.svg'
 import MinTempIcon from 'public/min-temp.svg'
 import Rain from 'public/rain.svg'
+import { useLocationContext } from '@/context/LocationContext'
+import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
 
 interface WeatherProps {
   weatherData: WeatherData

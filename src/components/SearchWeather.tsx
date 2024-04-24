@@ -2,12 +2,11 @@
 
 import { FC, useCallback, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { CSSObjectWithLabel } from 'react-select'
 import { CityData } from '@/app/api/cities/[name]/route'
 import { Location, useLocationContext } from '@/context/LocationContext'
 import { Weather } from './Weather'
 import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
-import { Forecast } from './Forecast'
-import { CSSObjectWithLabel } from 'react-select'
 
 interface SelectedCity {
   label: string
@@ -111,9 +110,9 @@ export const SearchWeather: FC = () => {
     padding: '0 1rem'
   })
 
-  const option = (provided: CSSObjectWithLabel, state: { isSelected: boolean }) => ({
+  const option = (provided: CSSObjectWithLabel, optionState: { isSelected: boolean }) => ({
     ...provided,
-    color: state.isSelected ? 'white' : 'black'
+    color: optionState.isSelected ? 'white' : 'black'
   })
 
   return (
@@ -121,7 +120,7 @@ export const SearchWeather: FC = () => {
       <Select
         styles={{
           control: (base) => styles(base),
-          option: (provided, state) => option(provided, state)
+          option: (provided, optionState) => option(provided, optionState)
         }}
         isDisabled={loading || isLoadingUserCoordinates}
         options={cityOptions}

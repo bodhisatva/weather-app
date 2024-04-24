@@ -6,7 +6,6 @@
   "extends": [
     "airbnb",
     "airbnb-typescript",
-    "next/babel",
     "plugin:import/typescript",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended"
