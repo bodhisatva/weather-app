@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { LocationContextProvider } from '@/context/LocationContext'
-import './styles.css'
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,9 +16,11 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
+  const backgroundOverlay = 'bg-gradient-to-b to-q-blue from-q-orange'
+
   return (
-    <html lang="en">
-      <body className={`container ${inter.className}`}>
+    <html className={`${backgroundOverlay} text-[#fff] h-full`} lang="en">
+      <body className={`${inter.className} h-full`}>
         <LocationContextProvider>{children}</LocationContextProvider>
       </body>
     </html>

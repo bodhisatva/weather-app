@@ -28,7 +28,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "cypress/tsconfig.json"
+    "cypress/tsconfig.json",
+    "tailwind.config.ts",
+    "postcss.config.mjs"
   ],
   "exclude": ["node_modules"]
 }

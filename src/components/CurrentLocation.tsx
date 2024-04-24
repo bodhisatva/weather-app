@@ -43,10 +43,9 @@ export const CurrentLocation: FC = () => {
   const userLocation = loading && !cityName ? 'Loading...' : `${cityName}, ${country}`
 
   return (
-    <div>
-      <p>
-        Your current location: <span data-cy="current-location">{userLocation}</span>
-      </p>
-    </div>
+    <>
+      <div className="font-semibold">Your current location:</div>
+      <div data-cy="current-location">{userLocation}</div>
+    </>
   )
 }

@@ -7,6 +7,7 @@ import { Location, useLocationContext } from '@/context/LocationContext'
 import { Weather } from './Weather'
 import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
 import { Forecast } from './Forecast'
+import { CSSObjectWithLabel } from 'react-select'
 
 interface SelectedCity {
   label: string
@@ -20,6 +21,9 @@ interface SelectedCity {
 }
 
 const Select = dynamic(() => import('react-select'), { ssr: false })
+
+const DropdownIndicator = () => null
+const IndicatorSeparator = () => null
 
 export const SearchWeather: FC = () => {
   const [inputValue, setInputValue] = useState('')
@@ -97,35 +101,40 @@ export const SearchWeather: FC = () => {
     handleSubmit(city)
   }
 
+  const loadingWeatherData = isLoadingUserCoordinates || loading
   const renderComponent = !loading && !isLoadingUserCoordinates && weatherData
+
+  const styles = (base: CSSObjectWithLabel) => ({
+    ...base,
+    borderRadius: '24px',
+    height: '3rem',
+    padding: '0 1rem'
+  })
+
+  const option = (provided: CSSObjectWithLabel, state: { isSelected: boolean }) => ({
+    ...provided,
+    color: state.isSelected ? 'white' : 'black'
+  })
 
   return (
     <div>
-      <div>
-        <Select
-          isDisabled={loading || isLoadingUserCoordinates}
-          options={cityOptions}
-          value={selectedCity}
-          onChange={(city) => onChangeHandler(city as CityData)}
-          onInputChange={setInputValue}
-          isLoading={loadingCityOptions}
-          placeholder="Search city..."
-        />
-      </div>
-      <br />
-
-      <div>
-        {loading || (isLoadingUserCoordinates && <div>Loading...</div>)}
-        {renderComponent && (
-          <div className="inlineRow">
-            <Weather weatherData={weatherData} />
-          </div>
-        )}
-        {!loading && (
-          <div className="inlineRow">
-            <Forecast />
-          </div>
-        )}
+      <Select
+        styles={{
+          control: (base) => styles(base),
+          option: (provided, state) => option(provided, state)
+        }}
+        isDisabled={loading || isLoadingUserCoordinates}
+        options={cityOptions}
+        value={selectedCity}
+        onChange={(city) => onChangeHandler(city as CityData)}
+        onInputChange={setInputValue}
+        isLoading={loadingCityOptions}
+        placeholder="Search city..."
+        components={{ DropdownIndicator, IndicatorSeparator }}
+      />
+      <div className="grid place-items-center mt-28">
+        {loadingWeatherData && <div>Loading...</div>}
+        {renderComponent && <Weather weatherData={weatherData} />}
       </div>
     </div>
   )

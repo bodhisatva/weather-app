@@ -3,6 +3,9 @@
 import { FC } from 'react'
 import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
 import { useLocationContext } from '@/context/LocationContext'
+import MaxTempIcon from 'public/max-temp.svg'
+import MinTempIcon from 'public/min-temp.svg'
+import Rain from 'public/rain.svg'
 
 interface WeatherProps {
   weatherData: WeatherData
@@ -16,15 +19,30 @@ export const Weather: FC<WeatherProps> = ({ weatherData }) => {
   const { temperature, minTemperature, maxTemperature } = formattedTemperatures
 
   return (
-    <div>
-      <div>
-        <h2 data-cy="current-temperature">{temperature}</h2>
-        <h2 data-cy="current-city">{userCity}</h2>
+    <>
+      <div className="font-bold text-50" data-cy="current-temperature">
+        {temperature}
       </div>
-      <h5>{weatherDescription}</h5>
-      <div>Max: {maxTemperature} </div>
-      <div>Min: {minTemperature} </div>
-      <div>{rain ? <div>Rain: {rain['1h']} mm</div> : null}</div>
-    </div>
+      <div className="font-bold text-50 mb-5" data-cy="current-city">
+        {userCity}
+      </div>
+      <div>{weatherDescription}</div>
+      <div className="flex flex-row space-x-4 mt-5">
+        <div className="flex items-center">
+          <MaxTempIcon className="mr-1" /> <span>Max: {maxTemperature}</span>
+        </div>
+        <div className="flex items-center">
+          <MinTempIcon className="mr-1" /> <span>Min: {minTemperature}</span>
+        </div>
+        <div>
+          {rain ? (
+            <div className="flex items-center">
+              <Rain className="mr-1" />
+              <span>Rain: {rain['1h']} mm</span>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </>
   )
 }
