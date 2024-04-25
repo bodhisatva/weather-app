@@ -19,8 +19,8 @@ export default function RootLayout({
   const backgroundOverlay = 'bg-gradient-to-b to-q-blue from-q-orange'
 
   return (
-    <html className={`${backgroundOverlay} text-[#fff] h-full`} lang="en">
-      <body className={`${inter.className} h-full`}>
+    <html className={`${backgroundOverlay} text-[#fff] min-h-screen`} lang="en">
+      <body className={`${inter.className}`}>
         <LocationContextProvider>{children}</LocationContextProvider>
       </body>
     </html>

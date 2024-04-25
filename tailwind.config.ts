@@ -17,7 +17,8 @@ const config: Config = {
       },
       colors: {
         'q-blue': '#2B3C5A',
-        'q-orange': '#956C45'
+        'q-orange': '#956C45',
+        'q-border': '#4F6A94'
       }
     }
   },

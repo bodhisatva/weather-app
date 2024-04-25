@@ -1,8 +1,12 @@
+/* eslint-disable react/jsx-props-no-spreading */
+
 'use client'
 
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { CSSObjectWithLabel } from 'react-select'
+import { CSSObjectWithLabel, components, ValueContainerProps } from 'react-select'
+import SearchIcon from 'public/search.svg'
+import CancelIcon from 'public/cancel.svg'
 import { CityData } from '@/app/api/cities/[name]/route'
 import { Location, useLocationContext } from '@/context/LocationContext'
 import { Weather } from './Weather'
@@ -31,6 +35,7 @@ export const SearchWeather: FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [loadingCityOptions, setCityOptionsLoading] = useState<boolean>(false)
   const [weatherData, setWeatherData] = useState<WeatherData>()
+  const [clearWeatherData, setClearWeatherData] = useState<boolean>(false)
 
   const { setSelectLocationCoordinates, setUserLocationInfo, state } = useLocationContext()
   const { userLocationCoordinates, isLoadingUserCoordinates } = state
@@ -78,10 +83,10 @@ export const SearchWeather: FC = () => {
   }
 
   useEffect(() => {
-    if (userLocationCoordinates && !weatherData) {
+    if (userLocationCoordinates && !clearWeatherData && !weatherData) {
       fetchWeatherData(userLocationCoordinates)
     }
-  }, [userLocationCoordinates, weatherData])
+  }, [clearWeatherData, userLocationCoordinates, weatherData])
 
   const handleSubmit = ({ coord, label, country }: CityData) => {
     if (coord) {
@@ -100,8 +105,33 @@ export const SearchWeather: FC = () => {
     handleSubmit(city)
   }
 
+  const onFocusHandler = () => {
+    setClearWeatherData(true)
+    setWeatherData(undefined)
+  }
+
   const loadingWeatherData = isLoadingUserCoordinates || loading
   const renderComponent = !loading && !isLoadingUserCoordinates && weatherData
+
+  const ValueContainer = useMemo(() => {
+    return ({ children, ...props }: ValueContainerProps) => {
+      const cancelOnClickHandler = () => {
+        setCityOptions([])
+        setInputValue('')
+        setSelectedCity(null)
+      }
+
+      return (
+        components.ValueContainer && (
+          <>
+            <SearchIcon className="mr-2" />
+            <components.ValueContainer {...props}>{children}</components.ValueContainer>
+            <CancelIcon onClick={cancelOnClickHandler} className="mr-2 cursor-pointer" />
+          </>
+        )
+      )
+    }
+  }, [setCityOptions, setInputValue, setSelectedCity])
 
   const styles = (base: CSSObjectWithLabel) => ({
     ...base,
@@ -112,7 +142,17 @@ export const SearchWeather: FC = () => {
 
   const option = (provided: CSSObjectWithLabel, optionState: { isSelected: boolean }) => ({
     ...provided,
-    color: optionState.isSelected ? 'white' : 'black'
+    color: optionState.isSelected ? 'black' : '#fff',
+    backgroundColor: 'transparent',
+    cursor: 'pointer'
+  })
+
+  const menu = (provided: CSSObjectWithLabel) => ({
+    ...provided,
+    backgroundColor: 'transparent',
+    border: 'none',
+    boxShadow: 'none',
+    paddingLeft: '3rem'
   })
 
   return (
@@ -120,16 +160,18 @@ export const SearchWeather: FC = () => {
       <Select
         styles={{
           control: (base) => styles(base),
-          option: (provided, optionState) => option(provided, optionState)
+          option: (provided, optionState) => option(provided, optionState),
+          menu: (provided) => menu(provided)
         }}
         isDisabled={loading || isLoadingUserCoordinates}
         options={cityOptions}
         value={selectedCity}
+        onFocus={onFocusHandler}
         onChange={(city) => onChangeHandler(city as CityData)}
         onInputChange={setInputValue}
         isLoading={loadingCityOptions}
         placeholder="Search city..."
-        components={{ DropdownIndicator, IndicatorSeparator }}
+        components={{ ValueContainer, DropdownIndicator, IndicatorSeparator }}
       />
       <div className="grid place-items-center mt-28">
         {loadingWeatherData && <div>Loading...</div>}

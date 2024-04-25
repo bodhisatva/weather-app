@@ -6,7 +6,7 @@ import { SearchWeather } from '@/components/SearchWeather'
 
 export default function Home() {
   return (
-    <div className="container mx-auto py-2 h-full">
+    <div className="container mx-auto py-2">
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
         <div>
           <div className="flex flex-row mb-16">

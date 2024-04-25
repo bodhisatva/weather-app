@@ -57,37 +57,39 @@ export const Forecast: FC = () => {
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>
-                <div className="flex flex-row w-full">
-                  <div className="basis-2/3">{date}</div>
-                  <div className="flex items-center mb-3 basis-1/3">
-                    <TemperatureIcon className="mr-1" />
+                <div className="border border-[#4F6A94] rounded-[25px] p-4">
+                  <div className="flex flex-row w-full">
+                    <div className="basis-2/3">{date}</div>
+                    <div className="flex items-center mb-3 basis-1/3">
+                      <TemperatureIcon className="mr-1" />
+                    </div>
+                    <div className="basis-1/3">{temperature}</div>
                   </div>
-                  <div className="basis-1/3">{temperature}</div>
-                </div>
-                <div className="flex flex-row w-full">
-                  <div className="basis-2/3" />
-                  <div className="flex items-center mb-3 basis-1/3">
-                    <MaxTempIcon className="mr-1" />
-                  </div>
-                  <div className="basis-1/3">Max: {max}</div>
-                </div>
-                <div className="flex flex-row w-full">
-                  <div className="basis-2/3" />
-                  <div className="flex items-center mb-3 basis-1/3">
-                    <MinTempIcon className="mr-1" />
-                  </div>
-                  <div className="basis-1/3">Min: {min}</div>
-                </div>
-
-                {rain ? (
                   <div className="flex flex-row w-full">
                     <div className="basis-2/3" />
                     <div className="flex items-center mb-3 basis-1/3">
-                      <Rain className="mr-1" />
+                      <MaxTempIcon className="mr-1" />
                     </div>
-                    <div className="basis-1/3">{`Rain ${rain} mm`}</div>
+                    <div className="basis-1/3">Max: {max}</div>
                   </div>
-                ) : null}
+                  <div className="flex flex-row w-full">
+                    <div className="basis-2/3" />
+                    <div className="flex items-center mb-3 basis-1/3">
+                      <MinTempIcon className="mr-1" />
+                    </div>
+                    <div className="basis-1/3">Min: {min}</div>
+                  </div>
+
+                  {rain ? (
+                    <div className="flex flex-row w-full">
+                      <div className="basis-2/3" />
+                      <div className="flex items-center basis-1/3">
+                        <Rain className="mr-1" />
+                      </div>
+                      <div className="basis-1/3">{`Rain ${rain} mm`}</div>
+                    </div>
+                  ) : null}
+                </div>
               </div>
             )
           })}
