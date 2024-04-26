@@ -44,9 +44,6 @@ export async function GET(request: NextRequest, context: ContextProps) {
 
   const { WEATHER_API_FORECAST, API_KEY } = process.env
 
-  // I had problems with the onecall API, it was returning a 401 error and probably related to subscription
-  // so I used the forecast API instead (5 days forecast)
-
   const query = `${WEATHER_API_FORECAST}${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
 
   try {
@@ -116,6 +113,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
     console.error('Error:', errorMessage)
+
     return Response.json({ message: errorMessage })
   }
 }

@@ -71,6 +71,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
     console.error('Error:', errorMessage)
+
     return Response.json({ message: errorMessage })
   }
 }
