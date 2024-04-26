@@ -7,8 +7,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Qvik Weather App',
-  description: 'Weather app for Qvik'
+  title: 'Weather App',
+  description: 'Weather app for checking the weather forecast'
 }
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
-  const backgroundOverlay = 'bg-gradient-to-b to-q-blue from-q-orange'
+  const backgroundOverlay = 'bg-gradient-to-b from-q-orange to-q-blue '
 
   return (
     <html className={`${backgroundOverlay} text-[#fff] min-h-screen`} lang="en">
