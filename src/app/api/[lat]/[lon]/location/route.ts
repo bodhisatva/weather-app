@@ -19,9 +19,10 @@ interface ContextProps {
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
+  const { lon, lat } = params
   const { WEATHER_API, API_KEY } = process.env
 
-  const query = `${WEATHER_API}${params.lat}&lon=${params.lon}&appid=${API_KEY}&units=metric`
+  const query = `${WEATHER_API}${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
 
   try {
     const response = await fetch(query)
