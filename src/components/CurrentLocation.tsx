@@ -3,6 +3,7 @@
 import { FC, useCallback, useEffect } from 'react'
 import { useLocationContext } from '@/context/LocationContext'
 import { useGetLocation } from './hooks/GetLocationData'
+import { SkeletonOneLine } from './skeleton/SkeletonOneLine'
 
 export const CurrentLocation: FC = () => {
   const { setIsLoadingUserCoordinates, setUserLocationInfo, setUserLocationCoordinates, state } =
@@ -40,7 +41,7 @@ export const CurrentLocation: FC = () => {
     }
   }, [cityName, country, setLocationData])
 
-  const userLocation = loading && !cityName ? 'Loading...' : `${cityName}, ${country}`
+  const userLocation = loading && !cityName ? <SkeletonOneLine /> : `${cityName}, ${country}`
 
   return (
     <>
