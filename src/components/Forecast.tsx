@@ -44,7 +44,7 @@ export const Forecast: FC = () => {
     <div>
       {loading && (
         <div className="flex items-center justify-center mt-24">
-          <div>Loading...</div>
+          <div className="text-3xl">Loading...</div>
         </div>
       )}
       {renderComponent && (

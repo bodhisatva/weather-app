@@ -41,7 +41,8 @@ export const CurrentLocation: FC = () => {
     }
   }, [cityName, country, setLocationData])
 
-  const userLocation = loading && !cityName ? <SkeletonOneLine /> : `${cityName}, ${country}`
+  const userLocation =
+    loading && !cityName ? <SkeletonOneLine height="h-3" /> : `${cityName}, ${country}`
 
   return (
     <>

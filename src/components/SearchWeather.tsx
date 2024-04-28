@@ -151,13 +151,16 @@ export const SearchWeather: FC = () => {
     paddingLeft: '3rem'
   })
 
+  const noOptionsMessage = (provided: CSSObjectWithLabel) => ({ ...provided, color: 'slate-50' })
+
   return (
     <div>
       <Select
         styles={{
           control: (base) => styles(base),
           option: (provided, optionState) => option(provided, optionState),
-          menu: (provided) => menu(provided)
+          menu: (provided) => menu(provided),
+          noOptionsMessage: (provided) => noOptionsMessage(provided)
         }}
         isDisabled={loading || isLoadingUserCoordinates}
         options={cityOptions}
