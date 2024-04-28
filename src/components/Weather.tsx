@@ -7,6 +7,7 @@ import Rain from 'public/rain.svg'
 import { useLocationContext } from '@/context/LocationContext'
 import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
 import ErrorBoundary from './error/ErrorBoundary'
+import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
 
 interface WeatherProps {
   weatherData: WeatherData
@@ -21,7 +22,7 @@ export const Weather: FC<WeatherProps> = ({ weatherData }) => {
 
   return (
     <ErrorBoundary>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<CurrentWeatherSkeleton />}>
         <div className="font-bold text-50" data-cy="current-temperature">
           {temperature}
         </div>

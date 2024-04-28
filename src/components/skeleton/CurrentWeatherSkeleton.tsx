@@ -1,4 +1,6 @@
-export const CurrentWeatherSkeleton = () => {
+import { FC } from 'react'
+
+export const CurrentWeatherSkeleton: FC = () => {
   return (
     <>
       <div className="animate-pulse bg-slate-200 h-6 w-[60px] mb-5 rounded" />

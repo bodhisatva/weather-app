@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="container mx-auto py-2">
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
-        <div>
+        <div className="mx-4">
           <div className="flex flex-row mb-16">
             <div className="basis-1/3 text-3xl font-bold">
               <div>Weather</div>
