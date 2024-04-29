@@ -13,18 +13,16 @@ export const CurrentLocation: FC = () => {
   const { loading, locationData } = useGetLocation(userLocationCoordinates)
   const { cityName, country } = locationData
 
-  const getUserLocationCoordinates = useCallback(() => {
-    if (navigator.geolocation) {
-      setIsLoadingUserCoordinates(true)
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
-        setIsLoadingUserCoordinates(false)
-        const { latitude: lat, longitude: lon } = coords
+  const getUserLocationCoordinates = useCallback(async () => {
+    setIsLoadingUserCoordinates(true)
 
-        setUserLocationCoordinates({ lat, lon })
-      })
-    } else {
-      console.error('Geolocation is not supported by this browser')
-    }
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      setIsLoadingUserCoordinates(false)
+
+      const { latitude: lat, longitude: lon } = coords
+
+      setUserLocationCoordinates({ lat, lon })
+    })
   }, [])
 
   useEffect(() => {

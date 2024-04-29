@@ -1,10 +1,24 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { CurrentLocation } from '@/components/CurrentLocation'
 import { Forecast } from '@/components/Forecast'
 import { SearchWeather } from '@/components/SearchWeather'
 
 export default function Home() {
+  const [locationPermission, setLocationPermission] = useState<PermissionState>('denied')
+
+  const checkLocationPermission = async () =>
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then(({ state: geolocationState }) => setLocationPermission(geolocationState))
+
+  useEffect(() => {
+    checkLocationPermission()
+  }, [])
+
+  const locationPermissionGranted = locationPermission === 'granted'
+
   return (
     <div className="container mx-auto py-2">
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
@@ -15,7 +29,7 @@ export default function Home() {
               <div>Site</div>
             </div>
             <div className="basis-2/3 text-right sm:text-end text-sm sm:text-base">
-              <CurrentLocation />
+              {locationPermissionGranted && <CurrentLocation />}
             </div>
           </div>
           <SearchWeather />
