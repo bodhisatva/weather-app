@@ -15,3 +15,5 @@ To run e2e test:
 ```bash
 yarn run cypress
 ```
+
+Vercel: [https://weather-app-mauve-eight-31.vercel.app/](https://weather-app-mauve-eight-31.vercel.app/)
