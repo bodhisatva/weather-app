@@ -14,7 +14,7 @@ export default function Home() {
               <div>Weather</div>
               <div>Site</div>
             </div>
-            <div className="basis-2/3">
+            <div className="basis-2/3 text-right sm:text-end text-sm sm:text-base">
               <CurrentLocation />
             </div>
           </div>

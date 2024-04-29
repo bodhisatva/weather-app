@@ -42,12 +42,20 @@ export const CurrentLocation: FC = () => {
   }, [cityName, country, setLocationData])
 
   const userLocation =
-    loading && !cityName ? <SkeletonOneLine height="h-3" /> : `${cityName}, ${country}`
+    loading && !cityName ? (
+      <div className="flex w-full justify-end">
+        <SkeletonOneLine height="h-3" />
+      </div>
+    ) : (
+      <div className="flex w-full justify-end">{`${cityName}, ${country}`}</div>
+    )
 
   return (
     <>
       <div className="font-semibold">Your current location:</div>
-      <div data-cy="current-location">{userLocation}</div>
+      <div data-cy="current-location" className="flex w-full">
+        {userLocation}
+      </div>
     </>
   )
 }
