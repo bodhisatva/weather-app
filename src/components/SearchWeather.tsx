@@ -151,7 +151,11 @@ export const SearchWeather: FC = () => {
     paddingLeft: '3rem'
   })
 
-  const noOptionsMessage = (provided: CSSObjectWithLabel) => ({ ...provided, color: 'slate-50' })
+  const noOptionsMessage = (provided: CSSObjectWithLabel) => ({
+    ...provided,
+    color: 'slate-50',
+    paddingRight: '3rem'
+  })
 
   return (
     <div>
