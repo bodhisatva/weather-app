@@ -7,14 +7,20 @@ export const useGetLocationPermission = () => {
 
   const createPrompt = useCallback(() => {
     if (typeof navigator !== 'undefined') {
-      navigator.geolocation.getCurrentPosition(
-        () => {
+      navigator.permissions.query({ name: 'geolocation' }).then(({ state }) => {
+        if (state === 'granted') {
           setLocationPermission('granted')
-        },
-        (error) => {
-          console.error('Error getting user location:', error)
+        } else if (state === 'prompt') {
+          navigator.geolocation.getCurrentPosition(
+            () => {
+              setLocationPermission('granted')
+            },
+            (error) => {
+              console.error('Error getting user location:', error)
+            }
+          )
         }
-      )
+      })
     }
   }, [])
 
