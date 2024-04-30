@@ -1,35 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export const useGetLocationPermission = () => {
   const [locationPermission, setLocationPermission] = useState<PermissionState | undefined>(
     undefined
   )
 
-  useEffect(() => {
-    const createPrompt = navigator.geolocation.getCurrentPosition(
-      () => {
-        setLocationPermission('granted')
-      },
-      (error) => {
-        console.error('Error getting user location:', error)
-      }
-    )
+  const createPrompt = useCallback(() => {
+    if (typeof navigator !== 'undefined') {
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          setLocationPermission('granted')
+        },
+        (error) => {
+          console.error('Error getting user location:', error)
+        }
+      )
+    }
+  }, [])
 
-    const checkLocationPermission = async () => {
+  useEffect(() => {
+    if (locationPermission === undefined) {
       navigator.permissions.query({ name: 'geolocation' }).then(({ state: geolocationState }) => {
         switch (geolocationState) {
           case 'granted':
             return setLocationPermission('granted')
           case 'prompt':
-            return createPrompt
+            return createPrompt()
           default:
             return setLocationPermission('denied')
         }
       })
     }
-
-    checkLocationPermission()
-  }, [locationPermission])
+  }, [createPrompt, locationPermission])
 
   return { locationPermission: locationPermission || 'denied' }
 }
