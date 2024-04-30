@@ -1,21 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { CurrentLocation } from '@/components/CurrentLocation'
 import { Forecast } from '@/components/Forecast'
 import { SearchWeather } from '@/components/SearchWeather'
 
+import { useGetLocationPermission } from '@/components/hooks/LocationPermission'
+
 export default function Home() {
-  const [locationPermission, setLocationPermission] = useState<PermissionState>('denied')
-
-  const checkLocationPermission = async () =>
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then(({ state: geolocationState }) => setLocationPermission(geolocationState))
-
-  useEffect(() => {
-    checkLocationPermission()
-  }, [])
+  const { locationPermission } = useGetLocationPermission()
 
   const locationPermissionGranted = locationPermission === 'granted'
 
