@@ -39,5 +39,5 @@ export const useGetLocationPermission = () => {
     }
   }, [createPrompt, locationPermission])
 
-  return { locationPermission: locationPermission || 'denied' }
+  return { locationPermission: locationPermission || 'prompt' }
 }
