@@ -10,7 +10,8 @@ const defaultLocationData = {
 export const useGetLocation = () => {
   const [locationData, setLocationData] = useState<LocationDataProps>(defaultLocationData)
   const [userCoordinates, setUserCoordinates] = useState<Location | undefined>()
-  const { setIsLoadingUserCoordinates, setUserLocationCoordinates } = useLocationContext()
+  const { setIsLoadingUserCoordinates, setUserLocationCoordinates, setUserLocationInfo } =
+    useLocationContext()
 
   const getUserLocationCoordinates = useCallback(async () => {
     setIsLoadingUserCoordinates(true)
@@ -23,6 +24,10 @@ export const useGetLocation = () => {
       setUserLocationCoordinates({ lat, lon })
       setUserCoordinates({ lat, lon })
     })
+  }, [])
+
+  const setCityAndCountry = useCallback((cityName: string, country: string) => {
+    setUserLocationInfo(cityName, country)
   }, [])
 
   useEffect(() => {
@@ -39,7 +44,9 @@ export const useGetLocation = () => {
           const data: LocationDataProps = await response.json()
 
           if (data) {
+            const { cityName, country } = data
             setLocationData(data)
+            setCityAndCountry(cityName, country)
           }
         } catch (error) {
           console.error('Error:', error)
@@ -48,7 +55,7 @@ export const useGetLocation = () => {
 
       fetchWeatherData()
     }
-  }, [userCoordinates, getUserLocationCoordinates])
+  }, [userCoordinates, getUserLocationCoordinates, setCityAndCountry])
 
   return { locationData }
 }
