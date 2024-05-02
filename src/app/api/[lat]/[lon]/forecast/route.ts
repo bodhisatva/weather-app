@@ -2,23 +2,8 @@ import { type NextRequest } from 'next/server'
 import { format } from 'date-fns'
 import { v4 as uuidv4 } from 'uuid'
 import { formatClosestInteger } from '@/utility/formatTemperature'
-import { Main } from '../weather/route'
+import { ForecastApiData, Weather } from '@/app/api/types'
 
-type Weather = {
-  main: string
-  icon: string
-}
-
-interface ForecastApiData {
-  list: {
-    dt: number
-    main: Main
-    weather: Weather[]
-    rain?: {
-      '3h': number
-    }
-  }[]
-}
 export interface ForecastData {
   id: string
   date: string
