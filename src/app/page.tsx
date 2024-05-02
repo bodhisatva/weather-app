@@ -4,13 +4,7 @@ import { CurrentLocation } from '@/components/CurrentLocation'
 import { Forecast } from '@/components/Forecast'
 import { SearchWeather } from '@/components/SearchWeather'
 
-import { useGetLocationPermission } from '@/components/hooks/LocationPermission'
-
 export default function Home() {
-  const { locationPermission } = useGetLocationPermission()
-
-  const locationPermissionGranted = locationPermission === 'granted'
-
   return (
     <div className="container mx-auto py-2">
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
@@ -21,7 +15,7 @@ export default function Home() {
               <div>Site</div>
             </div>
             <div className="basis-2/3 text-right sm:text-end text-sm sm:text-base">
-              {locationPermissionGranted && <CurrentLocation />}
+              <CurrentLocation />
             </div>
           </div>
           <SearchWeather />

@@ -10,20 +10,33 @@ const defaultLocationData = {
 export const useGetLocation = () => {
   const [locationData, setLocationData] = useState<LocationDataProps>(defaultLocationData)
   const [userCoordinates, setUserCoordinates] = useState<Location | undefined>()
+  const [locationPermission, setLocationPermission] = useState<PermissionState>('denied')
+  const [isLoading, setIsLoading] = useState(false)
+
   const { setIsLoadingUserCoordinates, setUserLocationCoordinates, setUserLocationInfo } =
     useLocationContext()
 
   const getUserLocationCoordinates = useCallback(async () => {
     setIsLoadingUserCoordinates(true)
 
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      setIsLoadingUserCoordinates(false)
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setIsLoadingUserCoordinates(false)
+        setLocationPermission('granted')
 
-      const { latitude: lat, longitude: lon } = coords
+        const { latitude: lat, longitude: lon } = coords
 
-      setUserLocationCoordinates({ lat, lon })
-      setUserCoordinates({ lat, lon })
-    })
+        setUserLocationCoordinates({ lat, lon })
+        setUserCoordinates({ lat, lon })
+      },
+      (error) => {
+        console.error('Error getting user location:', error)
+
+        setLocationPermission('denied')
+        setIsLoadingUserCoordinates(false)
+        setIsLoading(false)
+      }
+    )
   }, [])
 
   const setCityAndCountry = useCallback((cityName: string, country: string) => {
@@ -31,6 +44,8 @@ export const useGetLocation = () => {
   }, [])
 
   useEffect(() => {
+    setIsLoading(true)
+
     if (!userCoordinates) {
       getUserLocationCoordinates()
     }
@@ -50,6 +65,8 @@ export const useGetLocation = () => {
           }
         } catch (error) {
           console.error('Error:', error)
+        } finally {
+          setIsLoading(false)
         }
       }
 
@@ -57,5 +74,5 @@ export const useGetLocation = () => {
     }
   }, [userCoordinates, getUserLocationCoordinates, setCityAndCountry])
 
-  return { locationData }
+  return { locationData, locationPermission, isLoading }
 }
