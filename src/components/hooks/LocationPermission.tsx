@@ -7,28 +7,16 @@ export const useGetLocationPermission = () => {
   const { setIsLoadingUserCoordinates } = useLocationContext()
 
   const createPrompt = useCallback(() => {
-    if (typeof navigator !== 'undefined') {
-      navigator.permissions.query({ name: 'geolocation' }).then(({ state }) => {
-        setIsLoadingUserCoordinates(true)
-        if (state === 'granted') {
-          setLocationPermission('granted')
-        } else if (state === 'denied') {
-          setLocationPermission('denied')
-          setIsLoadingUserCoordinates(false)
-        } else if (state === 'prompt') {
-          navigator.geolocation.getCurrentPosition(
-            () => {
-              setLocationPermission('granted')
-            },
-            (error) => {
-              console.error('Error getting user location:', error)
-              setLocationPermission('denied')
-              setIsLoadingUserCoordinates(false)
-            }
-          )
-        }
-      })
-    }
+    navigator.geolocation.getCurrentPosition(
+      () => {
+        setLocationPermission('granted')
+      },
+      (error) => {
+        console.error('Error getting user location:', error)
+        setLocationPermission('denied')
+        setIsLoadingUserCoordinates(false)
+      }
+    )
   }, [])
 
   useEffect(() => {
@@ -44,7 +32,7 @@ export const useGetLocationPermission = () => {
         }
       })
     }
-  }, [createPrompt, locationPermission])
+  }, [])
 
   return { locationPermission: locationPermission || 'deny' }
 }
