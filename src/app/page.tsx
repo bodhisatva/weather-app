@@ -9,7 +9,7 @@ export default function Home() {
     <div className="container mx-auto py-2">
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
         <div className="mx-4">
-          <div className="flex flex-row mb-10 md:mb-16">
+          <div className="flex flex-row mb-12 md:mb-16">
             <div className="basis-1/3 text-3xl font-bold">
               <div>Weather</div>
               <div>Site</div>

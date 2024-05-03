@@ -41,7 +41,7 @@ export const Forecast: FC = () => {
   const renderComponent = !loading && forecastData
 
   return (
-    <div className="mt-10 md:mt-48">
+    <div className="mt-12 md:mt-48">
       {loading && (
         <div className="flex items-center justify-center">
           <div className="text-3xl">Loading...</div>
@@ -50,7 +50,7 @@ export const Forecast: FC = () => {
       {renderComponent && (
         <>
           <div
-            className="text-3xl font-bold mb-3 md:mb-6 text-center md:text-start"
+            className="text-2xl md:text-3xl font-bold mb-3 md:mb-6 text-center md:text-start"
             data-cy="forecast"
           >
             Upcoming Days

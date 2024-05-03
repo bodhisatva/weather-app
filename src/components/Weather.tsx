@@ -26,7 +26,7 @@ export const Weather: FC<WeatherProps> = ({ weatherData }) => {
       <div className="font-bold text-50" data-cy="current-city">
         {userCity}
       </div>
-      <div className="text-lg font-semibold my-4">{weatherDescription}</div>
+      <div className="text-lg font-semibold mt-5 mb-3">{weatherDescription}</div>
       <div className="flex items-center mb-3 text-sm">Forecast</div>
       <div className="flex flex-row space-x-4 ">
         <div className="flex items-center">

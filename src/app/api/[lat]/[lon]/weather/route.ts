@@ -1,5 +1,4 @@
 import { type NextRequest } from 'next/server'
-import { format } from 'date-fns'
 import { formatClosestInteger } from '@/utility/formatTemperature'
 import { capitaliseFirstCharacter } from '@/utility/formatStrings'
 import {
@@ -9,6 +8,7 @@ import {
   WeatherApiData,
   WeatherData
 } from '@/app/api/types'
+import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
@@ -29,19 +29,9 @@ export async function GET(request: NextRequest, context: ContextProps) {
     const { temp } = main
     const { description } = weather[0]
 
-    const dailyTemperatures = forecastData.list.reduce(
-      (acc, { dt, main: m }) => {
-        const date = format(new Date(dt * 1000), 'EEEE d.M')
+    const { dailyTemperatureList } = dailyTemperatures(forecastData)
 
-        acc[date] = acc[date] || []
-        acc[date].push(m.temp)
-
-        return acc
-      },
-      {} as Record<string, number[]>
-    )
-
-    const dailyMinAndMaXTemperatures = Object.entries(dailyTemperatures).map(
+    const dailyMinAndMaXTemperatures = Object.entries(dailyTemperatureList).map(
       ([date, temperatures]) => {
         return {
           date,

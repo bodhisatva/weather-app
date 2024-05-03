@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { v4 as uuidv4 } from 'uuid'
 import { formatClosestInteger } from '@/utility/formatTemperature'
 import { ForecastApiData, ContextProps, ForecastData, Weather } from '@/app/api/types'
+import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
@@ -20,19 +21,9 @@ export async function GET(request: NextRequest, context: ContextProps) {
       ({ dt }) => format(new Date(dt * 1000), 'kk:mm') === '15:00'
     )
 
-    const dailyTemperatures = daily.list.reduce(
-      (acc, { dt, main }) => {
-        const date = format(new Date(dt * 1000), 'EEEE d.M')
+    const { dailyTemperatureList } = dailyTemperatures(daily)
 
-        acc[date] = acc[date] || []
-        acc[date].push(main.temp)
-
-        return acc
-      },
-      {} as Record<string, number[]>
-    )
-
-    const dailyMinAndMaXTemperatures = Object.entries(dailyTemperatures).map(
+    const dailyMinAndMaXTemperatures = Object.entries(dailyTemperatureList).map(
       ([date, temperatures]) => {
         return {
           date,
