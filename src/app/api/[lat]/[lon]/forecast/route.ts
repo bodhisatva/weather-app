@@ -2,26 +2,7 @@ import { type NextRequest } from 'next/server'
 import { format } from 'date-fns'
 import { v4 as uuidv4 } from 'uuid'
 import { formatClosestInteger } from '@/utility/formatTemperature'
-import { ForecastApiData, Weather } from '@/app/api/types'
-
-export interface ForecastData {
-  id: string
-  date: string
-  temperatures: {
-    day: string
-    min: string
-    max: string
-  }
-  icon: string
-  rain?: number
-}
-
-interface ContextProps {
-  params: {
-    lat: number
-    lon: number
-  }
-}
+import { ForecastApiData, ContextProps, ForecastData, Weather } from '@/app/api/types'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context

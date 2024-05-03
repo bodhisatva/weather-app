@@ -5,7 +5,7 @@ import MaxTempIcon from 'public/max-temp.svg'
 import MinTempIcon from 'public/min-temp.svg'
 import Rain from 'public/rain.svg'
 import { useLocationContext } from '@/context/LocationContext'
-import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
+import { WeatherData } from '@/app/api/types'
 
 interface WeatherProps {
   weatherData: WeatherData

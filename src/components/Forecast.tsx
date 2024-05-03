@@ -3,8 +3,8 @@ import TemperatureIcon from 'public/temperature.svg'
 import Rain from 'public/rain.svg'
 import MaxTempIcon from 'public/max-temp.svg'
 import MinTempIcon from 'public/min-temp.svg'
-import { Location, useLocationContext } from '@/context/LocationContext'
-import { ForecastData } from '@/app/api/[lat]/[lon]/forecast/route'
+import { useLocationContext } from '@/context/LocationContext'
+import { ForecastData, Location } from '@/app/api/types'
 
 export const Forecast: FC = () => {
   const [forecastData, setForecastData] = useState<ForecastData[] | null>(null)

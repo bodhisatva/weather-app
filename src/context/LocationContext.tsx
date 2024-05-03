@@ -1,11 +1,7 @@
 'use client'
 
 import { FC, PropsWithChildren, createContext, useMemo, useState, useContext } from 'react'
-
-export interface Location {
-  lat: number | null
-  lon: number | null
-}
+import { Location } from '@/app/api/types'
 
 interface State {
   isLoadingUserCoordinates: boolean

@@ -2,45 +2,13 @@ import { type NextRequest } from 'next/server'
 import { format } from 'date-fns'
 import { formatClosestInteger } from '@/utility/formatTemperature'
 import { capitaliseFirstCharacter } from '@/utility/formatStrings'
-import { ForecastApiData } from '@/app/api/types'
-
-interface Temperature {
-  temperature: string | null
-  minTemperature: string | null
-  maxTemperature: string | null
-}
-
-export interface Main {
-  temp: number
-  temp_min: number
-  temp_max: number
-}
-
-interface Rain {
-  '1h': number
-  '3h'?: number
-}
-
-interface WeatherApiData {
-  main: Main
-  weather: {
-    description: string
-  }[]
-  rain: Rain | null | undefined
-}
-
-export interface WeatherData {
-  formattedTemperatures: Temperature
-  weatherDescription: string
-  rain: Rain | null | undefined
-}
-
-interface ContextProps {
-  params: {
-    lat: number
-    lon: number
-  }
-}
+import {
+  ContextProps,
+  ForecastApiData,
+  Temperature,
+  WeatherApiData,
+  WeatherData
+} from '@/app/api/types'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context

@@ -8,10 +8,10 @@ import { CSSObjectWithLabel, components, ValueContainerProps } from 'react-selec
 import SearchIcon from 'public/search.svg'
 import CancelIcon from 'public/cancel.svg'
 import { CityData } from '@/app/api/cities/[name]/route'
-import { Location, useLocationContext } from '@/context/LocationContext'
+import { useLocationContext } from '@/context/LocationContext'
 import { Weather } from './Weather'
-import { WeatherData } from '@/app/api/[lat]/[lon]/weather/route'
 import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
+import { WeatherData, Location } from '@/app/api/types'
 
 interface SelectedCity {
   label: string

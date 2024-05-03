@@ -1,21 +1,5 @@
 import { type NextRequest } from 'next/server'
-
-interface LocationApiDataProps {
-  name: string
-  sys: { country: string }
-}
-
-export interface LocationDataProps {
-  cityName: string
-  country: string
-}
-
-interface ContextProps {
-  params: {
-    lat: number
-    lon: number
-  }
-}
+import { ContextProps, LocationApiData, LocationData } from '@/app/api/types'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
@@ -26,12 +10,12 @@ export async function GET(request: NextRequest, context: ContextProps) {
 
   try {
     const response = await fetch(query)
-    const data: LocationApiDataProps = await response.json()
+    const data: LocationApiData = await response.json()
 
     const { name, sys } = data
     const { country } = sys
 
-    const responseObject: LocationDataProps = {
+    const responseObject: LocationData = {
       cityName: name,
       country
     }
