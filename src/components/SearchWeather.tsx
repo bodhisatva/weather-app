@@ -106,8 +106,8 @@ export const SearchWeather: FC = () => {
     setWeatherData(undefined)
   }
 
-  const loadingWeatherData = isLoadingUserCoordinates || loading
-  const renderComponent = !loading && !isLoadingUserCoordinates && weatherData
+  const loadingWeatherData = isLoadingUserCoordinates
+  const renderComponent = weatherData
 
   const ValueContainer = useMemo(() => {
     return ({ children, ...props }: ValueContainerProps) => {
