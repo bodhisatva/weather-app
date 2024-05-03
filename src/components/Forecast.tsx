@@ -41,7 +41,7 @@ export const Forecast: FC = () => {
   const renderComponent = !loading && forecastData
 
   return (
-    <div className="mt-16 md:mt-48">
+    <div className="mt-10 md:mt-48">
       {loading && (
         <div className="flex items-center justify-center">
           <div className="text-3xl">Loading...</div>
@@ -49,7 +49,10 @@ export const Forecast: FC = () => {
       )}
       {renderComponent && (
         <>
-          <div className="text-3xl font-bold mb-6 text-center md:text-start" data-cy="forecast">
+          <div
+            className="text-3xl font-bold mb-3 md:mb-6 text-center md:text-start"
+            data-cy="forecast"
+          >
             Upcoming Days
           </div>
           {forecastData.map(({ id, date, temperatures, rain }) => {

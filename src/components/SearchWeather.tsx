@@ -175,7 +175,7 @@ export const SearchWeather: FC = () => {
         placeholder="Search city..."
         components={{ ValueContainer, DropdownIndicator, IndicatorSeparator }}
       />
-      <div className="grid place-items-center mt-10 md:mt-28">
+      <div className="grid place-items-center mt-8 md:mt-28">
         {loadingWeatherData && <CurrentWeatherSkeleton />}
         {renderComponent && <Weather weatherData={weatherData} />}
       </div>
