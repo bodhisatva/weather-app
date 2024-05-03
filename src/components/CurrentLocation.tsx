@@ -8,9 +8,11 @@ export const CurrentLocation: FC = () => {
   const { locationData, locationPermission, isLoading } = useGetLocation()
   const { cityName, country } = locationData
 
+  const renderComponent = locationPermission === 'granted' && cityName
+
   return (
     <>
-      {locationPermission === 'granted' && cityName && (
+      {renderComponent && (
         <>
           <div className="font-semibold">Your current location:</div>
           <div data-cy="current-location" className="flex w-full">
@@ -21,10 +23,10 @@ export const CurrentLocation: FC = () => {
       {isLoading && (
         <>
           <div className="flex w-full justify-end mb-1">
-            <SkeletonOneLine height="h-3" />
+            <SkeletonOneLine height="h-3" width="w-40" />
           </div>
           <div className="flex w-full justify-end">
-            <SkeletonOneLine height="h-3" />
+            <SkeletonOneLine height="h-3" width="w-20" />
           </div>
         </>
       )}
