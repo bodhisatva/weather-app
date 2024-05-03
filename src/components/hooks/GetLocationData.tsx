@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Location, useLocationContext } from '@/context/LocationContext'
-import { LocationDataProps } from '@/app/api/[lat]/[lon]/location/route'
+import { useLocationContext } from '@/context/LocationContext'
+import { Location, LocationData } from '@/app/api/types'
 
 const defaultLocationData = {
   cityName: '',
@@ -8,7 +8,7 @@ const defaultLocationData = {
 }
 
 export const useGetLocation = () => {
-  const [locationData, setLocationData] = useState<LocationDataProps>(defaultLocationData)
+  const [locationData, setLocationData] = useState<LocationData>(defaultLocationData)
   const [userCoordinates, setUserCoordinates] = useState<Location | undefined>()
   const [locationPermission, setLocationPermission] = useState<PermissionState>('denied')
   const [isLoading, setIsLoading] = useState(false)
@@ -56,7 +56,7 @@ export const useGetLocation = () => {
 
         try {
           const response = await fetch(`/api/${lat}/${lon}/location`)
-          const data: LocationDataProps = await response.json()
+          const data: LocationData = await response.json()
 
           if (data) {
             const { cityName, country } = data
