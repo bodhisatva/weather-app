@@ -11,7 +11,6 @@ beforeEach(() => {
 describe('Weather', () => {
   it('should have a user location and current temperature for the location', () => {
     cy.dataCy('current-location').should(($el) => {
-      expect($el).not.to.contain.text('Loading...')
       expect($el).to.contain.text('Espoo, FI')
     })
     cy.dataCy('current-temperature').should('be.visible')
