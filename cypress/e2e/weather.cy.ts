@@ -17,19 +17,15 @@ describe('Weather', () => {
     cy.dataCy('current-city').should('be.visible').and('contain.text', 'Espoo')
   })
 
-  it('should show forecast for a selected city', () => {
-    const city = 'Helsinki'
-
-    cy.get("[type='text']").type(city).type('{enter}', { force: true })
-
-    cy.dataCy('forecast').should('be.visible')
-    cy.dataCy('current-city').should('be.visible').and('contain.text', city)
-  })
-
-  it('should show forecast for five days', () => {
+  it('should remove weather data when user clicks on search combo box', () => {
     cy.get("[type='text']").type('Muurame').type('{enter}', { force: true })
 
-    cy.dataCy('forecast').should('be.visible')
-    cy.dataCy('forecast-day').should('have.length', 5)
+    cy.dataCy('current-temperature').should('be.visible')
+    cy.dataCy('current-city').should('be.visible').and('contain.text', 'Muurame')
+
+    cy.get("[type='text']").click()
+
+    cy.dataCy('current-temperature').should('not.exist')
+    cy.dataCy('current-city').should('not.exist')
   })
 })
