@@ -23,7 +23,7 @@ const mapWeatherIconCode = (iconCode: string) => {
 }
 
 export const createIcon = (iconCode: string) => {
-  const Icon = mapWeatherIconCode(iconCode)
+  const Icon = mapWeatherIconCode(iconCode) || Sun
 
   return <Icon />
 }
