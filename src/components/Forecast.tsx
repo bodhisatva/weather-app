@@ -1,10 +1,10 @@
 import { FC, useCallback, useEffect, useState } from 'react'
-import TemperatureIcon from 'public/icons/clear-day.svg'
 import Rain from 'public/icons/rain.svg'
 import MaxTempIcon from 'public/icons/thermometer.svg'
 import MinTempIcon from 'public/icons/thermometer-minus.svg'
 import { useLocationContext } from '@/context/LocationContext'
 import { ForecastData, Location } from '@/app/api/types'
+import { createIcon } from '@/utility/mapWeatherIcon'
 
 export const Forecast: FC = () => {
   const [forecastData, setForecastData] = useState<ForecastData[] | null>(null)
@@ -55,17 +55,17 @@ export const Forecast: FC = () => {
           >
             Upcoming Days
           </div>
-          {forecastData.map(({ id, date, temperatures, rain }) => {
+          {forecastData.map(({ id, date, temperatures, rain, icon }) => {
             const { day: temperature, min, max } = temperatures
+
+            const Icon = createIcon(icon)
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>
                 <div className="border border-[#4F6A94] rounded-[25px] pt-4 px-4">
                   <div className="flex flex-row w-full">
                     <div className="basis-2/3">{date}</div>
-                    <div className="flex items-center mb-3 basis-1/3">
-                      <TemperatureIcon className="mr-1" />
-                    </div>
+                    <div className="flex items-center mb-3 basis-1/3">{Icon}</div>
                     <div className="basis-1/3">{temperature}</div>
                   </div>
                   <div className="flex flex-row w-full">
