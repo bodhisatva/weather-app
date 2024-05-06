@@ -15,8 +15,8 @@ export async function GET(request: NextRequest, context: ContextProps) {
   const { lat, lon } = params
   const { WEATHER_API, API_KEY, WEATHER_API_FORECAST } = process.env
 
-  const currentWeatherQuery = `${WEATHER_API}${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-  const forecastQuery = `${WEATHER_API_FORECAST}${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  const currentWeatherQuery = `${WEATHER_API}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  const forecastQuery = `${WEATHER_API_FORECAST}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
 
   try {
     const currentWeatherResponse = await fetch(currentWeatherQuery, { next: { revalidate: 0 } })
