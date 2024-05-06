@@ -16,7 +16,7 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
-  const backgroundOverlay = 'bg-gradient-to-b from-q-orange to-q-blue '
+  const backgroundOverlay = 'bg-gradient-to-b from-w-silver-blue to-w-blue '
 
   return (
     <html className={`${backgroundOverlay} text-[#fff] min-h-screen`} lang="en">
