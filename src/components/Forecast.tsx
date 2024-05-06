@@ -60,7 +60,7 @@ export const Forecast: FC = () => {
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>
-                <div className="border border-[#4F6A94] rounded-[25px] p-4">
+                <div className="border border-[#4F6A94] rounded-[25px] pt-4 px-4">
                   <div className="flex flex-row w-full">
                     <div className="basis-2/3">{date}</div>
                     <div className="flex items-center mb-3 basis-1/3">
