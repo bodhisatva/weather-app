@@ -6,6 +6,7 @@ import MinTempIcon from 'public/icons/thermometer-minus.svg'
 import Rain from 'public/icons/rain.svg'
 import { useLocationContext } from '@/context/LocationContext'
 import { WeatherData } from '@/app/api/types'
+import { createIcon } from '@/utility/mapWeatherIcon'
 
 interface WeatherProps {
   weatherData: WeatherData
@@ -15,8 +16,10 @@ export const Weather: FC<WeatherProps> = ({ weatherData }) => {
   const { state } = useLocationContext()
   const { userCity } = state
 
-  const { formattedTemperatures, weatherDescription, rain } = weatherData
+  const { formattedTemperatures, weatherDescription, rain, icon } = weatherData
   const { temperature, minTemperature, maxTemperature } = formattedTemperatures
+
+  const weatherIcon = createIcon(icon)
 
   return (
     <>
@@ -26,7 +29,10 @@ export const Weather: FC<WeatherProps> = ({ weatherData }) => {
       <div className="font-bold text-50" data-cy="current-city">
         {userCity}
       </div>
-      <div className="text-lg font-semibold mt-5 mb-3">{weatherDescription}</div>
+      <div className="flex flex-row pt-2 pb-6">
+        <div className="flex items-center">{weatherIcon}</div>
+        <div className="text-lg font-semibold ml-2">{weatherDescription}</div>
+      </div>
       <div className="flex items-center mb-3 text-sm">Forecast</div>
       <div className="flex flex-row space-x-4 ">
         <div className="flex items-center">

@@ -66,6 +66,7 @@ export interface WeatherApiData {
   main: Main
   weather: {
     description: string
+    icon: string
   }[]
   rain: Rain | null | undefined
 }
@@ -74,4 +75,5 @@ export interface WeatherData {
   formattedTemperatures: Temperature
   weatherDescription: string
   rain: Rain | null | undefined
+  icon: string
 }
