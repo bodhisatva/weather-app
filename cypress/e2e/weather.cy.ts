@@ -21,7 +21,7 @@ describe('Weather', () => {
   it('should show forecast for a selected city', () => {
     const city = 'Helsinki'
 
-    cy.get("[type='text']").type(city).type('{enter}')
+    cy.get("[type='text']").type(city).type('{enter}', { force: true })
 
     cy.dataCy('forecast').should('be.visible')
     cy.dataCy('current-city').should('be.visible').and('contain.text', city)
