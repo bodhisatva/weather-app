@@ -1,8 +1,8 @@
 import { FC, useCallback, useEffect, useState } from 'react'
-import TemperatureIcon from 'public/temperature.svg'
-import Rain from 'public/rain.svg'
-import MaxTempIcon from 'public/max-temp.svg'
-import MinTempIcon from 'public/min-temp.svg'
+import TemperatureIcon from 'public/icons/clear-day.svg'
+import Rain from 'public/icons/rain.svg'
+import MaxTempIcon from 'public/icons/thermometer.svg'
+import MinTempIcon from 'public/icons/thermometer-minus.svg'
 import { useLocationContext } from '@/context/LocationContext'
 import { ForecastData, Location } from '@/app/api/types'
 
