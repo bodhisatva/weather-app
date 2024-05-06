@@ -9,6 +9,7 @@ interface State {
   userCity: string | undefined
   userCountry: string | undefined
   selectedLocationCoordinates: Location | undefined
+  forecastVisibility: boolean
 }
 
 interface ContextProps {
@@ -17,6 +18,7 @@ interface ContextProps {
   setUserLocationCoordinates: (coordinates: Location | undefined) => void
   setUserLocationInfo: (city: string, country: string) => void
   setSelectLocationCoordinates: (coordinates: Location | undefined) => void
+  setForecastVisibility: (forecastData: boolean) => void
 }
 
 const LocationContext = createContext<ContextProps | null>(null)
@@ -27,7 +29,8 @@ export const LocationContextProvider: FC<PropsWithChildren<{}>> = ({ children })
     userLocationCoordinates: undefined,
     userCity: undefined,
     userCountry: undefined,
-    selectedLocationCoordinates: undefined
+    selectedLocationCoordinates: undefined,
+    forecastVisibility: false
   }
 
   const [state, setState] = useState<State>(defaultState)
@@ -61,9 +64,17 @@ export const LocationContextProvider: FC<PropsWithChildren<{}>> = ({ children })
     }))
   }
 
+  const setForecastVisibility = (forecastVisibility: boolean) => {
+    setState((prevState) => ({
+      ...prevState,
+      forecastVisibility
+    }))
+  }
+
   const value = useMemo(
     () => ({
       state,
+      setForecastVisibility,
       setIsLoadingUserCoordinates,
       setUserLocationCoordinates,
       setUserLocationInfo,

@@ -10,8 +10,8 @@ export const Forecast: FC = () => {
   const [forecastData, setForecastData] = useState<ForecastData[] | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { state } = useLocationContext()
-  const { selectedLocationCoordinates } = state
+  const { setForecastVisibility, state } = useLocationContext()
+  const { selectedLocationCoordinates, forecastVisibility } = state
 
   const fetchForecastData = useCallback(async (coordinates: Location) => {
     const { lat, lon } = coordinates
@@ -24,6 +24,7 @@ export const Forecast: FC = () => {
 
       if (data) {
         setForecastData(data)
+        setForecastVisibility(true)
       }
     } catch (error) {
       console.error('Error:', error)
@@ -38,7 +39,7 @@ export const Forecast: FC = () => {
     }
   }, [fetchForecastData, selectedLocationCoordinates])
 
-  const renderComponent = !loading && forecastData
+  const renderComponent = !loading && forecastData && forecastVisibility
 
   return (
     <div className="mt-12 md:mt-48">

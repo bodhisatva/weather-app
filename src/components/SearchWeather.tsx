@@ -37,7 +37,8 @@ export const SearchWeather: FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherData>()
   const [clearWeatherData, setClearWeatherData] = useState<boolean>(false)
 
-  const { setSelectLocationCoordinates, setUserLocationInfo, state } = useLocationContext()
+  const { setForecastVisibility, setSelectLocationCoordinates, setUserLocationInfo, state } =
+    useLocationContext()
   const { userLocationCoordinates, isLoadingUserCoordinates } = state
 
   const fetchCityInfo = useCallback(async (value: string) => {
@@ -104,6 +105,7 @@ export const SearchWeather: FC = () => {
   const onFocusHandler = () => {
     setClearWeatherData(true)
     setWeatherData(undefined)
+    setForecastVisibility(false)
   }
 
   const loadingWeatherData = isLoadingUserCoordinates || loading
