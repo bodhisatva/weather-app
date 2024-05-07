@@ -2,7 +2,7 @@
 
 'use client'
 
-import { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { CSSObjectWithLabel, components, ValueContainerProps } from 'react-select'
 import SearchIcon from 'public/icons/search.svg'
@@ -159,6 +159,28 @@ export const SearchWeather: FC = () => {
     paddingRight: '3rem'
   })
 
+  const formatOptionLabel = (data: unknown): ReactNode => {
+    const { label } = data as CityData
+    const startOfMatch = label.toLowerCase().indexOf(inputValue.toLowerCase())
+    const enfOfMatch = startOfMatch + inputValue.length
+
+    if (startOfMatch === -1 || !inputValue) {
+      return label
+    }
+
+    const firstPartOfLabeltext = label.substring(0, startOfMatch)
+    const boldedText = (
+      <span className="font-bold" key={label}>
+        {label.substring(startOfMatch, enfOfMatch)}
+      </span>
+    )
+    const lastPartOfLabelText = label.substring(enfOfMatch)
+
+    const labelWithBoldedMatch = [firstPartOfLabeltext, boldedText, lastPartOfLabelText]
+
+    return <span>{labelWithBoldedMatch}</span>
+  }
+
   return (
     <div>
       <Select
@@ -176,6 +198,7 @@ export const SearchWeather: FC = () => {
         onInputChange={setInputValue}
         placeholder="Search city..."
         components={{ ValueContainer, DropdownIndicator, IndicatorSeparator }}
+        formatOptionLabel={formatOptionLabel}
       />
       <div className="grid place-items-center mt-8 md:mt-28">
         {loadingWeatherData && <CurrentWeatherSkeleton />}
