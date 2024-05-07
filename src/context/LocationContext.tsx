@@ -23,7 +23,9 @@ interface ContextProps {
 
 const LocationContext = createContext<ContextProps | null>(null)
 
-export const LocationContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
+export const LocationContextProvider: FC<PropsWithChildren<Record<string, never>>> = ({
+  children
+}) => {
   const defaultState = {
     isLoadingUserCoordinates: false,
     userLocationCoordinates: undefined,

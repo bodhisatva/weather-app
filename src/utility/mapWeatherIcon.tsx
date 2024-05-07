@@ -10,6 +10,8 @@ import PartlyCloudyNight from '@/icons/partly-cloudy-night.svg'
 import Showers from '@/icons/rainy-light.svg'
 
 const mapWeatherIconCode = (iconCode: string) => {
+  // Use any to avoid conflicts with @svgr/webpack plugin or babel-plugin-inline-react-svg plugin.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const iconMap: Record<string, any> = {
     '01d': Sun, // clear sky
     '01n': Moon, // clear sky at night
