@@ -7,6 +7,7 @@ export interface Main {
 export type Weather = {
   main: string
   icon: string
+  description: string
 }
 
 export interface Location {
@@ -28,6 +29,7 @@ export interface ForecastApiData {
 export interface ForecastData {
   id: string
   date: string
+  description: string
   temperatures: {
     day: string
     min: string

@@ -56,21 +56,21 @@ export const Forecast: FC = () => {
           >
             Upcoming Days
           </div>
-          {forecastData.map(({ id, date, temperatures, rain, icon }) => {
+          {forecastData.map(({ id, date, temperatures, rain, icon, description }) => {
             const { day: temperature, min, max } = temperatures
 
             const Icon = createIcon(icon)
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>
-                <div className="border border-[#4F6A94] rounded-[25px] pt-4 px-4">
+                <div className="border border-[#4F6A94] rounded-[15px] pt-4 px-4">
                   <div className="flex flex-row w-full">
                     <div className="basis-2/3">{date}</div>
                     <div className="flex items-center mb-3 basis-1/3">{Icon}</div>
                     <div className="basis-1/3">{temperature}</div>
                   </div>
                   <div className="flex flex-row w-full">
-                    <div className="basis-2/3" />
+                    <div className="basis-2/3 text-xs">{description}</div>
                     <div className="flex items-center mb-3 basis-1/3">
                       <MaxTempIcon className="mr-1" />
                     </div>
@@ -85,7 +85,7 @@ export const Forecast: FC = () => {
                   </div>
 
                   {rain ? (
-                    <div className="flex flex-row w-full">
+                    <div className="flex flex-row w-full mb-4">
                       <div className="basis-2/3" />
                       <div className="flex items-center basis-1/3">
                         <Rain className="mr-1" />

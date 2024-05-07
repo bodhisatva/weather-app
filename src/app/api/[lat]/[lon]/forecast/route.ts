@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { formatClosestInteger } from '@/utility/formatTemperature'
 import { ForecastApiData, ContextProps, ForecastData, Weather } from '@/app/api/types'
 import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
+import { capitaliseFirstCharacter } from '@/utility/formatStrings'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
@@ -12,6 +13,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
   const { WEATHER_API_FORECAST, API_KEY } = process.env
 
   const query = `${WEATHER_API_FORECAST}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+
   try {
     const response = await fetch(query, { next: { revalidate: 0 } })
     const daily: ForecastApiData = await response.json()
@@ -51,9 +53,12 @@ export async function GET(request: NextRequest, context: ContextProps) {
     const responseArray: ForecastData[] = temperaturesAtAfternoon.map(
       ({ dt, main, weather, rain }) => {
         const date = format(new Date(dt * 1000), 'EEEE d.M')
+        const { description } = weather[0]
+
         return {
           id: uuidv4(),
           date,
+          description: capitaliseFirstCharacter(description),
           temperatures: {
             day: formatClosestInteger(main.temp),
             min: findMinTemperature(date),
