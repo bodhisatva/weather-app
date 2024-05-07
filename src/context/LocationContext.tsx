@@ -1,6 +1,14 @@
 'use client'
 
-import { FC, PropsWithChildren, createContext, useMemo, useState, useContext } from 'react'
+import {
+  FC,
+  PropsWithChildren,
+  createContext,
+  useMemo,
+  useState,
+  useContext,
+  ReactNode
+} from 'react'
 import { Location } from '@/app/api/types'
 
 interface State {
@@ -23,7 +31,7 @@ interface ContextProps {
 
 const LocationContext = createContext<ContextProps | null>(null)
 
-export const LocationContextProvider: FC<PropsWithChildren<Record<string, never>>> = ({
+export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode }>> = ({
   children
 }) => {
   const defaultState = {
