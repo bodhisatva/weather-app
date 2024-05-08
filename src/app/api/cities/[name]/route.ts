@@ -1,7 +1,7 @@
 import { type NextRequest } from 'next/server'
 import { uniqBy } from 'lodash'
+import Fuse from 'fuse.js'
 import cities from './finland.cities.json'
-import { sortAlphabetically } from '@/utility/formatStrings'
 
 interface ContextProps {
   params: {
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
     return Response.json({ message: 'City not found' })
   }
 
-  const response: CityData[] = uniqBy(
+  const uniqueCityList: CityData[] = uniqBy(
     filteredCities.map(({ name: cityName, country, coord }) => ({
       label: cityName,
       country,
@@ -41,8 +41,12 @@ export async function GET(request: NextRequest, context: ContextProps) {
     'label'
   )
 
+  const fuseData = new Fuse<CityData>(uniqueCityList, { keys: ['label'] })
+  const sortedDataList = fuseData.search(name)
+  const response = sortedDataList.map(({ item }) => item)
+
   try {
-    return Response.json(sortAlphabetically(response))
+    return Response.json(response)
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
     console.error('Error:', errorMessage)

@@ -175,7 +175,6 @@ export const SearchWeather: FC = () => {
       </span>
     )
     const lastPartOfLabelText = label.substring(enfOfMatch)
-
     const labelWithBoldedMatch = [firstPartOfLabeltext, boldedText, lastPartOfLabelText]
 
     return <span>{labelWithBoldedMatch}</span>
