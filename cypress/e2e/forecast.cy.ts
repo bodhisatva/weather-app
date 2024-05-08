@@ -19,14 +19,16 @@ describe('Forecast', () => {
   })
 
   it('should show forecast for five days', () => {
-    cy.get("[type='text']").type('Muurame').type('{enter}', { force: true })
+    cy.get("[type='text']").type('Muurame')
+    cy.get('div[class*="option"]').first().click()
 
     cy.dataCy('forecast').should('be.visible')
     cy.dataCy('forecast-day').should('have.length', 5)
   })
 
   it('should remove forcast data when user clicks on search combo box', () => {
-    cy.get("[type='text']").type('Muurame').type('{enter}', { force: true })
+    cy.get("[type='text']").type('Muurame')
+    cy.get('div[class*="option"]').first().click()
 
     cy.dataCy('forecast').should('be.visible')
 

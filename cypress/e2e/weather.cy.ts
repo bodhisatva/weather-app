@@ -18,7 +18,8 @@ describe('Weather', () => {
   })
 
   it('should remove weather data when user clicks on search combo box', () => {
-    cy.get("[type='text']").type('Muurame').type('{enter}', { force: true })
+    cy.get("[type='text']").type('Muurame')
+    cy.get('div[class*="option"]').first().click()
 
     cy.dataCy('current-temperature').should('be.visible')
     cy.dataCy('current-city').should('be.visible').and('contain.text', 'Muurame')
