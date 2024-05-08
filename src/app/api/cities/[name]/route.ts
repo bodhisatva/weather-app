@@ -2,6 +2,7 @@ import { type NextRequest } from 'next/server'
 import { uniqBy } from 'lodash'
 import Fuse from 'fuse.js'
 import cities from './finland.cities.json'
+import { Location } from '@/app/api/types'
 
 interface ContextProps {
   params: {
@@ -12,12 +13,7 @@ interface ContextProps {
 export interface CityData {
   label: string
   country: string
-  coord:
-    | {
-        lon: number
-        lat: number
-      }
-    | undefined
+  coord: Location | undefined
 }
 
 export async function GET(request: NextRequest, context: ContextProps) {

@@ -16,12 +16,7 @@ import { WeatherData, Location } from '@/app/api/types'
 interface SelectedCity {
   label: string
   country: string
-  coord:
-    | {
-        lat: number
-        lon: number
-      }
-    | undefined
+  coord: Location | undefined
 }
 
 const Select = dynamic(() => import('react-select'), { ssr: false })
