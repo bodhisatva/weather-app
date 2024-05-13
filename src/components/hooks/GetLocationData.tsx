@@ -10,19 +10,23 @@ const defaultLocationData = {
 export const useGetLocation = () => {
   const [locationData, setLocationData] = useState<LocationData>(defaultLocationData)
   const [userCoordinates, setUserCoordinates] = useState<Location | undefined>()
-  const [locationPermission, setLocationPermission] = useState<PermissionState>('denied')
   const [isLoading, setIsLoading] = useState(false)
 
-  const { setIsLoadingUserCoordinates, setUserLocationCoordinates, setUserLocationInfo } =
-    useLocationContext()
+  const {
+    setIsLoadingUserCoordinates,
+    setUserLocationCoordinates,
+    setUserLocationInfo,
+    setLocationPermissionState
+  } = useLocationContext()
 
   const getUserLocationCoordinates = useCallback(async () => {
     setIsLoadingUserCoordinates(true)
+    setIsLoading(true)
 
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         setIsLoadingUserCoordinates(false)
-        setLocationPermission('granted')
+        setLocationPermissionState('granted')
 
         const { latitude: lat, longitude: lon } = coords
 
@@ -32,7 +36,7 @@ export const useGetLocation = () => {
       (error) => {
         console.error('Error getting user location:', error)
 
-        setLocationPermission('denied')
+        setLocationPermissionState('denied')
         setIsLoadingUserCoordinates(false)
         setIsLoading(false)
       }
@@ -44,8 +48,6 @@ export const useGetLocation = () => {
   }, [])
 
   useEffect(() => {
-    setIsLoading(true)
-
     if (!userCoordinates) {
       getUserLocationCoordinates()
     }
@@ -74,5 +76,5 @@ export const useGetLocation = () => {
     }
   }, [userCoordinates, getUserLocationCoordinates, setCityAndCountry])
 
-  return { locationData, locationPermission, isLoading }
+  return { locationData, isLoading }
 }
