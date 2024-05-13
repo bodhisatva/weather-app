@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useLocationContext } from '@/context/LocationContext'
-import { Location, LocationData } from '@/app/api/types'
+import { LocationData } from '@/app/api/types'
 
 const defaultLocationData = {
   cityName: '',
@@ -9,15 +9,17 @@ const defaultLocationData = {
 
 export const useGetLocation = () => {
   const [locationData, setLocationData] = useState<LocationData>(defaultLocationData)
-  const [userCoordinates, setUserCoordinates] = useState<Location | undefined>()
   const [isLoading, setIsLoading] = useState(false)
 
   const {
     setIsLoadingUserCoordinates,
     setUserLocationCoordinates,
     setUserLocationInfo,
-    setLocationPermissionState
+    setLocationPermissionState,
+    state
   } = useLocationContext()
+
+  const { userLocationCoordinates } = state
 
   const getUserLocationCoordinates = useCallback(async () => {
     setIsLoadingUserCoordinates(true)
@@ -31,7 +33,6 @@ export const useGetLocation = () => {
         const { latitude: lat, longitude: lon } = coords
 
         setUserLocationCoordinates({ lat, lon })
-        setUserCoordinates({ lat, lon })
       },
       (error) => {
         console.error('Error getting user location:', error)
@@ -48,13 +49,13 @@ export const useGetLocation = () => {
   }, [])
 
   useEffect(() => {
-    if (!userCoordinates) {
+    if (!userLocationCoordinates) {
       getUserLocationCoordinates()
     }
 
-    if (userCoordinates) {
+    if (userLocationCoordinates) {
       const fetchWeatherData = async () => {
-        const { lat, lon } = userCoordinates
+        const { lat, lon } = userLocationCoordinates
 
         try {
           const response = await fetch(`/api/${lat}/${lon}/location`)
@@ -74,7 +75,7 @@ export const useGetLocation = () => {
 
       fetchWeatherData()
     }
-  }, [userCoordinates, getUserLocationCoordinates, setCityAndCountry])
+  }, [userLocationCoordinates, getUserLocationCoordinates, setCityAndCountry])
 
   return { locationData, isLoading }
 }
