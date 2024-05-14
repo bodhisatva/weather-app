@@ -34,7 +34,7 @@ export const SearchWeather: FC = () => {
 
   const { setForecastVisibility, setSelectLocationCoordinates, setUserLocationInfo, state } =
     useLocationContext()
-  const { userLocationCoordinates, isLoadingUserCoordinates } = state
+  const { userLocationCoordinates, loadingUserCoordinates } = state
 
   const fetchCityInfo = useCallback(async (value: string) => {
     try {
@@ -103,8 +103,8 @@ export const SearchWeather: FC = () => {
     setForecastVisibility(false)
   }
 
-  const loadingWeatherData = isLoadingUserCoordinates || loading
-  const renderComponent = weatherData && !isLoadingUserCoordinates && !loading
+  const loadingWeatherData = loadingUserCoordinates || loading
+  const renderComponent = weatherData && !loadingUserCoordinates && !loading
 
   const ValueContainer = useMemo(() => {
     return ({ children, ...props }: ValueContainerProps) => {
@@ -184,7 +184,7 @@ export const SearchWeather: FC = () => {
           menu: (provided) => menu(provided),
           noOptionsMessage: (provided) => noOptionsMessage(provided)
         }}
-        isDisabled={loading || isLoadingUserCoordinates}
+        isDisabled={loading || loadingUserCoordinates}
         options={cityOptions}
         value={selectedCity}
         onFocus={onFocusHandler}

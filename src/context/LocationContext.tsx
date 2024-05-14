@@ -13,7 +13,7 @@ import { Location } from '@/app/api/types'
 
 interface State {
   forecastVisibility: boolean
-  isLoadingUserCoordinates: boolean
+  loadingUserCoordinates: boolean
   locationPermission: PermissionState
   userLocationCoordinates: Location | undefined
   userCity: string | undefined
@@ -38,7 +38,7 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
 }) => {
   const defaultState = {
     forecastVisibility: false,
-    isLoadingUserCoordinates: false,
+    loadingUserCoordinates: false,
     locationPermission: 'prompt' as PermissionState,
     userLocationCoordinates: undefined,
     userCity: undefined,
@@ -51,7 +51,7 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
   const setIsLoadingUserCoordinates = (loading: boolean) => {
     setState((prevState) => ({
       ...prevState,
-      isLoadingUserCoordinates: loading
+      loadingUserCoordinates: loading
     }))
   }
 
