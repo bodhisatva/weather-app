@@ -15,7 +15,7 @@ interface State {
   forecastVisibility: boolean
   loadingUserCoordinates: boolean
   locationPermission: PermissionState
-  userLocationCoordinates: Location | undefined
+  userLocationCoordinates: Location
   userCity: string | undefined
   userCountry: string | undefined
   selectedLocationCoordinates: Location | undefined
@@ -24,9 +24,9 @@ interface State {
 interface ContextProps {
   state: State
   setIsLoadingUserCoordinates: (loading: boolean) => void
-  setUserLocationCoordinates: (coordinates: Location | undefined) => void
+  setUserLocationCoordinates: (coordinates: Location) => void
   setUserLocationInfo: (city: string, country: string) => void
-  setSelectLocationCoordinates: (coordinates: Location | undefined) => void
+  setSelectLocationCoordinates: (coordinates: Location) => void
   setForecastVisibility: (forecastData: boolean) => void
   setLocationPermissionState: (locationPermission: PermissionState) => void
 }
@@ -40,7 +40,7 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
     forecastVisibility: false,
     loadingUserCoordinates: false,
     locationPermission: 'prompt' as PermissionState,
-    userLocationCoordinates: undefined,
+    userLocationCoordinates: { lat: 60.1699, lon: 24.9384 },
     userCity: undefined,
     userCountry: undefined,
     selectedLocationCoordinates: undefined
@@ -62,14 +62,14 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
     }))
   }
 
-  const setUserLocationCoordinates = (userLocationCoordinates: Location | undefined) => {
+  const setUserLocationCoordinates = (userLocationCoordinates: Location) => {
     setState((prevState) => ({
       ...prevState,
       userLocationCoordinates
     }))
   }
 
-  const setSelectLocationCoordinates = (selectedLocationCoordinates: Location | undefined) => {
+  const setSelectLocationCoordinates = (selectedLocationCoordinates: Location) => {
     setState((prevState) => ({
       ...prevState,
       selectedLocationCoordinates

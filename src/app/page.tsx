@@ -3,6 +3,7 @@
 import { CurrentLocation } from '@/components/CurrentLocation'
 import { Forecast } from '@/components/Forecast'
 import { SearchWeather } from '@/components/SearchWeather'
+import Weather from '@/components/Weather'
 import { useLocationContext } from '@/context/LocationContext'
 
 export default function Home() {
@@ -26,6 +27,9 @@ export default function Home() {
             </div>
           </div>
           <SearchWeather />
+          <div className="grid place-items-center mt-8 md:mt-28">
+            <Weather />
+          </div>
         </div>
         <div className="mx-4 sm:mx-8 md:mx-16 xl:mx-30">
           <Forecast />

@@ -2,7 +2,7 @@
 
 'use client'
 
-import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, ReactNode, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { CSSObjectWithLabel, components, ValueContainerProps } from 'react-select'
 import SearchIcon from 'public/icons/search.svg'
@@ -34,7 +34,7 @@ export const SearchWeather: FC = () => {
 
   const { setForecastVisibility, setSelectLocationCoordinates, setUserLocationInfo, state } =
     useLocationContext()
-  const { userLocationCoordinates, loadingUserCoordinates } = state
+  const { loadingUserCoordinates } = state
 
   const fetchCityInfo = useCallback(async (value: string) => {
     try {
@@ -74,12 +74,6 @@ export const SearchWeather: FC = () => {
     }
   }
 
-  useEffect(() => {
-    if (userLocationCoordinates && !clearWeatherData && !weatherData) {
-      fetchWeatherData(userLocationCoordinates)
-    }
-  }, [clearWeatherData, userLocationCoordinates, weatherData])
-
   const handleSubmit = ({ coord, label, country }: CityData) => {
     if (coord) {
       fetchWeatherData(coord)
@@ -104,7 +98,6 @@ export const SearchWeather: FC = () => {
   }
 
   const loadingWeatherData = loadingUserCoordinates || loading
-  const renderComponent = weatherData && !loadingUserCoordinates && !loading
 
   const ValueContainer = useMemo(() => {
     return ({ children, ...props }: ValueContainerProps) => {
@@ -194,10 +187,6 @@ export const SearchWeather: FC = () => {
         components={{ ValueContainer, DropdownIndicator, IndicatorSeparator }}
         formatOptionLabel={formatOptionLabel}
       />
-      <div className="grid place-items-center mt-8 md:mt-28">
-        {loadingWeatherData && <CurrentWeatherSkeleton />}
-        {renderComponent && <Weather weatherData={weatherData} />}
-      </div>
     </div>
   )
 }

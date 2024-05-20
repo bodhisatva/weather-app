@@ -1,22 +1,34 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, Suspense } from 'react'
 import MaxTempIcon from 'public/icons/thermometer.svg'
 import MinTempIcon from 'public/icons/thermometer-minus.svg'
 import Rain from 'public/icons/rain.svg'
 import { useLocationContext } from '@/context/LocationContext'
 import { WeatherData } from '@/app/api/types'
 import { createIcon } from '@/utility/mapWeatherIcon'
+import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
+import { useQuery } from '@tanstack/react-query'
+import { useFetchWeather } from './hooks/useFetchWeather'
 
-interface WeatherProps {
-  weatherData: WeatherData
-}
-
-export const Weather: FC<WeatherProps> = ({ weatherData }) => {
+export const Weather: FC = () => {
   const { state } = useLocationContext()
-  const { userCity } = state
+  const { userCity, userLocationCoordinates } = state
+  const { lat, lon } = userLocationCoordinates
 
-  const { formattedTemperatures, weatherDescription, rain, icon } = weatherData
+  const { data, error } = useFetchWeather(lat, lon)
+
+  console.log(data)
+
+  if (error) {
+    return <div>An error occured: {error.message}</div>
+  }
+
+  if (!data) {
+    return <CurrentWeatherSkeleton />
+  }
+
+  const { formattedTemperatures, weatherDescription, rain, icon } = data
   const { temperature, minTemperature, maxTemperature } = formattedTemperatures
 
   const weatherIcon = createIcon(icon)

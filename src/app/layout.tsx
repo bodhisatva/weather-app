@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { LocationContextProvider } from '@/context/LocationContext'
 import './globals.css'
+import { Query, QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryClientProvider } from '@/components/react-query-client/Provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +23,9 @@ export default function RootLayout({
   return (
     <html className={`${backgroundOverlay} text-[#fff] min-h-screen`} lang="en">
       <body className={`${inter.className}`}>
-        <LocationContextProvider>{children}</LocationContextProvider>
+        <ReactQueryClientProvider>
+          <LocationContextProvider>{children}</LocationContextProvider>
+        </ReactQueryClientProvider>
       </body>
     </html>
   )
