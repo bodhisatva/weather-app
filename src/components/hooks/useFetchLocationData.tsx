@@ -1,5 +1,5 @@
-import { LocationData } from '@/app/api/types'
 import { useQuery } from '@tanstack/react-query'
+import { LocationData } from '@/app/api/types'
 
 const fetchLocation = async (lat: number, lon: number) => {
   try {

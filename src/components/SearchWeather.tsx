@@ -31,7 +31,6 @@ export const SearchWeather: FC<Props> = ({ setWeatherDataVisibility }) => {
   const [inputValue, setInputValue] = useState('')
   const [cityOptions, setCityOptions] = useState<CityData[]>([])
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)
-  const [coordinates, setCoordinates] = useState<Location | undefined>()
 
   const { setUserLocationInfo, setUserLocationCoordinates, state } = useLocationContext()
   const { loadingUserCoordinates, userLocationCoordinates } = state
@@ -72,11 +71,10 @@ export const SearchWeather: FC<Props> = ({ setWeatherDataVisibility }) => {
 
   const onChangeHandler = (city: CityData) => {
     const { coord } = city
-    setCoordinates(coord)
 
     if (coord) {
-      const { lat, lon } = coord
-      setUserLocationCoordinates({ lat, lon })
+      const { lat: latitude, lon: longitude } = coord
+      setUserLocationCoordinates({ lat: latitude, lon: longitude })
       handleSubmit(city)
     }
   }

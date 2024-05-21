@@ -1,11 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import { CurrentLocation } from '@/components/CurrentLocation'
 import { Forecast } from '@/components/Forecast'
 import { SearchWeather } from '@/components/SearchWeather'
 import Weather from '@/components/Weather'
 import { useLocationContext } from '@/context/LocationContext'
-import { useState } from 'react'
 
 export default function Home() {
   const { state } = useLocationContext()

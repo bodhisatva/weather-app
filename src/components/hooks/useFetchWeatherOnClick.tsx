@@ -1,5 +1,5 @@
-import { WeatherData } from '@/app/api/types'
 import { useQuery } from '@tanstack/react-query'
+import { WeatherData } from '@/app/api/types'
 
 const fetchWeather = async (lat: number, lon: number) => {
   try {

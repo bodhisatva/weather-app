@@ -30,12 +30,12 @@ export const CurrentLocation: FC = () => {
   const renderComponent = locationPermission === 'granted'
 
   return (
-    <>
+    <div>
       {renderComponent && (
         <div data-cy="current-location" className="flex w-full">
           <div className="flex w-full justify-end">{`${cityName}, ${country}`}</div>
         </div>
       )}
-    </>
+    </div>
   )
 }

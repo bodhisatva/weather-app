@@ -17,7 +17,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier", "eslint-plugin-query"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "@tanstack/eslint-plugin-query"],
   "rules": {
     "import/extensions": "off",
     "import/prefer-default-export": "off",

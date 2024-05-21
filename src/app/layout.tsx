@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { LocationContextProvider } from '@/context/LocationContext'
 import './globals.css'
-import { Query, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryClientProvider } from '@/components/react-query-client/Provider'
 
 const inter = Inter({ subsets: ['latin'] })
