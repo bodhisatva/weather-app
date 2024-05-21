@@ -160,6 +160,7 @@ export const SearchWeather: FC<Props> = ({ visibility }) => {
         isDisabled={loadingUserCoordinates}
         options={cityOptions}
         value={selectedCity}
+        onFocus={() => visibility(false)}
         onChange={(city) => onChangeHandler(city as CityData)}
         onInputChange={setInputValue}
         placeholder="Search city..."
