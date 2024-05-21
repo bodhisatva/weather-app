@@ -24,10 +24,10 @@ const DropdownIndicator = () => null
 const IndicatorSeparator = () => null
 
 interface Props {
-  setWeatherDataVisibility: (visibility: boolean) => void
+  visibility: (visibility: boolean) => void
 }
 
-export const SearchWeather: FC<Props> = ({ setWeatherDataVisibility }) => {
+export const SearchWeather: FC<Props> = ({ visibility }) => {
   const [inputValue, setInputValue] = useState('')
   const [cityOptions, setCityOptions] = useState<CityData[]>([])
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)
@@ -51,7 +51,7 @@ export const SearchWeather: FC<Props> = ({ setWeatherDataVisibility }) => {
 
   useEffect(() => {
     if (inputValue) {
-      setWeatherDataVisibility(false)
+      visibility(false)
       fetchCityInfo(inputValue)
     }
   }, [fetchCityInfo, inputValue])
@@ -60,7 +60,7 @@ export const SearchWeather: FC<Props> = ({ setWeatherDataVisibility }) => {
 
   const handleSubmit = ({ label, country }: CityData) => {
     refetch()
-    setWeatherDataVisibility(true)
+    visibility(true)
 
     setCityOptions([])
     setInputValue('')
@@ -165,7 +165,7 @@ export const SearchWeather: FC<Props> = ({ setWeatherDataVisibility }) => {
         placeholder="Search city..."
         components={{ ValueContainer, DropdownIndicator, IndicatorSeparator }}
         formatOptionLabel={formatOptionLabel}
-        onMenuClose={() => setWeatherDataVisibility(true)}
+        onMenuClose={() => visibility(true)}
       />
     </div>
   )

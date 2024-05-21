@@ -30,7 +30,7 @@ export default function Home() {
               <CurrentLocation />
             </div>
           </div>
-          <SearchWeather setWeatherDataVisibility={setWeatherDataVisibility} />
+          <SearchWeather visibility={setWeatherDataVisibility} />
           <div className={`grid place-items-center mt-8 md:mt-28 ${visibility}`}>
             <Weather />
           </div>
