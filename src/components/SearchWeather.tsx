@@ -2,16 +2,15 @@
 
 'use client'
 
-import { FC, ReactNode, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { CSSObjectWithLabel, components, ValueContainerProps } from 'react-select'
 import SearchIcon from 'public/icons/search.svg'
 import CancelIcon from 'public/icons/cancel.svg'
 import { CityData } from '@/app/api/cities/[name]/route'
 import { useLocationContext } from '@/context/LocationContext'
-import { Weather } from './Weather'
-import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
-import { WeatherData, Location } from '@/app/api/types'
+import { Location } from '@/app/api/types'
+import { useFetchWeatherOnClick } from './hooks/useFetchWeatherOnClick'
 
 interface SelectedCity {
   label: string
@@ -24,17 +23,19 @@ const Select = dynamic(() => import('react-select'), { ssr: false })
 const DropdownIndicator = () => null
 const IndicatorSeparator = () => null
 
-export const SearchWeather: FC = () => {
+interface Props {
+  setWeatherDataVisibility: (visibility: boolean) => void
+}
+
+export const SearchWeather: FC<Props> = ({ setWeatherDataVisibility }) => {
   const [inputValue, setInputValue] = useState('')
   const [cityOptions, setCityOptions] = useState<CityData[]>([])
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
-  const [weatherData, setWeatherData] = useState<WeatherData>()
-  const [clearWeatherData, setClearWeatherData] = useState<boolean>(false)
+  const [coordinates, setCoordinates] = useState<Location | undefined>()
 
-  const { setForecastVisibility, setSelectLocationCoordinates, setUserLocationInfo, state } =
-    useLocationContext()
-  const { loadingUserCoordinates } = state
+  const { setUserLocationInfo, setUserLocationCoordinates, state } = useLocationContext()
+  const { loadingUserCoordinates, userLocationCoordinates } = state
+  const { lat, lon } = userLocationCoordinates
 
   const fetchCityInfo = useCallback(async (value: string) => {
     try {
@@ -51,34 +52,16 @@ export const SearchWeather: FC = () => {
 
   useEffect(() => {
     if (inputValue) {
+      setWeatherDataVisibility(false)
       fetchCityInfo(inputValue)
     }
   }, [fetchCityInfo, inputValue])
 
-  const fetchWeatherData = async (coordinates: Location) => {
-    const { lat, lon } = coordinates
+  const { refetch } = useFetchWeatherOnClick(lat, lon)
 
-    try {
-      setLoading(true)
-
-      const response = await fetch(`/api/${lat}/${lon}/weather`)
-      const weather: WeatherData = await response.json()
-
-      if (weather) {
-        setWeatherData(weather)
-      }
-    } catch (error) {
-      console.error('Error:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleSubmit = ({ coord, label, country }: CityData) => {
-    if (coord) {
-      fetchWeatherData(coord)
-      setSelectLocationCoordinates(coord)
-    }
+  const handleSubmit = ({ label, country }: CityData) => {
+    refetch()
+    setWeatherDataVisibility(true)
 
     setCityOptions([])
     setInputValue('')
@@ -88,16 +71,15 @@ export const SearchWeather: FC = () => {
   }
 
   const onChangeHandler = (city: CityData) => {
-    handleSubmit(city)
-  }
+    const { coord } = city
+    setCoordinates(coord)
 
-  const onFocusHandler = () => {
-    setClearWeatherData(true)
-    setWeatherData(undefined)
-    setForecastVisibility(false)
+    if (coord) {
+      const { lat, lon } = coord
+      setUserLocationCoordinates({ lat, lon })
+      handleSubmit(city)
+    }
   }
-
-  const loadingWeatherData = loadingUserCoordinates || loading
 
   const ValueContainer = useMemo(() => {
     return ({ children, ...props }: ValueContainerProps) => {
@@ -177,15 +159,15 @@ export const SearchWeather: FC = () => {
           menu: (provided) => menu(provided),
           noOptionsMessage: (provided) => noOptionsMessage(provided)
         }}
-        isDisabled={loading || loadingUserCoordinates}
+        isDisabled={loadingUserCoordinates}
         options={cityOptions}
         value={selectedCity}
-        onFocus={onFocusHandler}
         onChange={(city) => onChangeHandler(city as CityData)}
         onInputChange={setInputValue}
         placeholder="Search city..."
         components={{ ValueContainer, DropdownIndicator, IndicatorSeparator }}
         formatOptionLabel={formatOptionLabel}
+        onMenuClose={() => setWeatherDataVisibility(true)}
       />
     </div>
   )

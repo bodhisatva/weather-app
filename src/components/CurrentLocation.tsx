@@ -1,27 +1,39 @@
 import { FC } from 'react'
-import { useGetLocation } from './hooks/GetLocationData'
+import { useGetLocationPermission } from './hooks/useGetLocationPermission'
 import { SkeletonOneLine } from './skeleton/SkeletonOneLine'
 import { useLocationContext } from '@/context/LocationContext'
+import { useFetchUserLocation } from './hooks/useFetchUserLocation'
 
 export const CurrentLocation: FC = () => {
-  const { locationData, isLoading } = useGetLocation()
-  const { cityName, country } = locationData
+  useGetLocationPermission()
 
   const { state } = useLocationContext()
-  const { locationPermission } = state
+  const { locationPermission, userLocationCoordinates, loadingUserCoordinates } = state
+  const { lat, lon } = userLocationCoordinates
 
-  const renderComponent = locationPermission === 'granted' && cityName
+  const { data, error } = useFetchUserLocation(lat, lon)
+
+  if (error) {
+    return <div>An error occured: {error.message}</div>
+  }
+
+  if (!data || loadingUserCoordinates) {
+    return (
+      <div className="flex w-full justify-end">
+        <SkeletonOneLine height="h-3" width="w-20" />
+      </div>
+    )
+  }
+
+  const { cityName, country } = data
+
+  const renderComponent = locationPermission === 'granted'
 
   return (
     <>
       {renderComponent && (
         <div data-cy="current-location" className="flex w-full">
           <div className="flex w-full justify-end">{`${cityName}, ${country}`}</div>
-        </div>
-      )}
-      {isLoading && (
-        <div className="flex w-full justify-end">
-          <SkeletonOneLine height="h-3" width="w-20" />
         </div>
       )}
     </>

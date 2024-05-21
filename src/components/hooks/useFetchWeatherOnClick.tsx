@@ -13,9 +13,10 @@ const fetchWeather = async (lat: number, lon: number) => {
   }
 }
 
-export const useFetchWeather = (lat: number, lon: number) => {
+export const useFetchWeatherOnClick = (lat: number, lon: number) => {
   return useQuery({
-    queryKey: ['weather', lat, lon],
-    queryFn: () => fetchWeather(lat, lon)
+    queryKey: ['weather-onclick'],
+    queryFn: () => fetchWeather(lat, lon),
+    enabled: false
   })
 }

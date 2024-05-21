@@ -26,7 +26,7 @@ describe('Forecast', () => {
     cy.dataCy('forecast-day').should('have.length', 5)
   })
 
-  it('should remove forcast data when user clicks on search combo box', () => {
+  it('should not remove forcast data when user clicks on search combo box', () => {
     cy.get("[type='text']").type('Muurame')
     cy.get('div[class*="option"]').first().click()
 
@@ -34,6 +34,6 @@ describe('Forecast', () => {
 
     cy.get("[type='text']").click()
 
-    cy.dataCy('forecast').should('not.exist')
+    cy.dataCy('forecast').should('exist')
   })
 })

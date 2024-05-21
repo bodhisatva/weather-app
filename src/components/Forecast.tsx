@@ -10,8 +10,8 @@ export const Forecast: FC = () => {
   const [forecastData, setForecastData] = useState<ForecastData[] | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { setForecastVisibility, state } = useLocationContext()
-  const { selectedLocationCoordinates, forecastVisibility } = state
+  const { state } = useLocationContext()
+  const { userLocationCoordinates, loadingUserCoordinates } = state
 
   const fetchForecastData = useCallback(async (coordinates: Location) => {
     const { lat, lon } = coordinates
@@ -24,7 +24,6 @@ export const Forecast: FC = () => {
 
       if (data) {
         setForecastData(data)
-        setForecastVisibility(true)
       }
     } catch (error) {
       console.error('Error:', error)
@@ -34,16 +33,17 @@ export const Forecast: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (selectedLocationCoordinates) {
-      fetchForecastData(selectedLocationCoordinates)
+    if (userLocationCoordinates) {
+      fetchForecastData(userLocationCoordinates)
     }
-  }, [fetchForecastData, selectedLocationCoordinates])
+  }, [fetchForecastData, userLocationCoordinates])
 
-  const renderComponent = !loading && forecastData && forecastVisibility
+  const renderComponent = !loading && forecastData && !loadingUserCoordinates
+  const loadingComponent = loading || loadingUserCoordinates
 
   return (
     <div className="mt-12 md:mt-48">
-      {loading && (
+      {loadingComponent && (
         <div className="flex items-center justify-center">
           <div className="text-3xl">Loading...</div>
         </div>

@@ -1,35 +1,35 @@
 'use client'
 
-import { FC, Suspense } from 'react'
+import { FC } from 'react'
 import MaxTempIcon from 'public/icons/thermometer.svg'
 import MinTempIcon from 'public/icons/thermometer-minus.svg'
 import Rain from 'public/icons/rain.svg'
 import { useLocationContext } from '@/context/LocationContext'
-import { WeatherData } from '@/app/api/types'
 import { createIcon } from '@/utility/mapWeatherIcon'
 import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
-import { useQuery } from '@tanstack/react-query'
 import { useFetchWeather } from './hooks/useFetchWeather'
+import { useFetchLocationData } from './hooks/useFetchLocationData'
 
 export const Weather: FC = () => {
   const { state } = useLocationContext()
-  const { userCity, userLocationCoordinates } = state
+  const { userLocationCoordinates, loadingUserCoordinates } = state
   const { lat, lon } = userLocationCoordinates
 
   const { data, error } = useFetchWeather(lat, lon)
+  const { data: locationData, error: locationError } = useFetchLocationData(lat, lon)
 
-  console.log(data)
-
-  if (error) {
-    return <div>An error occured: {error.message}</div>
+  if (error || locationError) {
+    return <div>An error occured: {error?.message}</div>
   }
 
-  if (!data) {
+  if (!data || !locationData || loadingUserCoordinates) {
     return <CurrentWeatherSkeleton />
   }
 
   const { formattedTemperatures, weatherDescription, rain, icon } = data
   const { temperature, minTemperature, maxTemperature } = formattedTemperatures
+
+  const { cityName } = locationData
 
   const weatherIcon = createIcon(icon)
 
@@ -39,7 +39,7 @@ export const Weather: FC = () => {
         {temperature}
       </div>
       <div className="font-bold text-50" data-cy="current-city">
-        {userCity}
+        {cityName}
       </div>
       <div className="flex flex-row pt-2 pb-6">
         <div className="flex items-center">{weatherIcon}</div>

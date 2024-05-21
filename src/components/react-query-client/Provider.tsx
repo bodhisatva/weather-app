@@ -10,8 +10,8 @@ export const ReactQueryClientProvider: FC<PropsWithChildren> = ({ children }) =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 6 * 1000,
-            refetchInterval: 6 * 1000
+            staleTime: 6 * 100000,
+            refetchInterval: 6 * 100000
           }
         }
       })

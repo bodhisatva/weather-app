@@ -18,7 +18,6 @@ interface State {
   userLocationCoordinates: Location
   userCity: string | undefined
   userCountry: string | undefined
-  selectedLocationCoordinates: Location | undefined
 }
 
 interface ContextProps {
@@ -26,8 +25,6 @@ interface ContextProps {
   setIsLoadingUserCoordinates: (loading: boolean) => void
   setUserLocationCoordinates: (coordinates: Location) => void
   setUserLocationInfo: (city: string, country: string) => void
-  setSelectLocationCoordinates: (coordinates: Location) => void
-  setForecastVisibility: (forecastData: boolean) => void
   setLocationPermissionState: (locationPermission: PermissionState) => void
 }
 
@@ -42,8 +39,7 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
     locationPermission: 'prompt' as PermissionState,
     userLocationCoordinates: { lat: 60.1699, lon: 24.9384 },
     userCity: undefined,
-    userCountry: undefined,
-    selectedLocationCoordinates: undefined
+    userCountry: undefined
   }
 
   const [state, setState] = useState<State>(defaultState)
@@ -69,13 +65,6 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
     }))
   }
 
-  const setSelectLocationCoordinates = (selectedLocationCoordinates: Location) => {
-    setState((prevState) => ({
-      ...prevState,
-      selectedLocationCoordinates
-    }))
-  }
-
   const setUserLocationInfo = (userCity: string, userCountry: string) => {
     setState((prevState) => ({
       ...prevState,
@@ -84,21 +73,12 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
     }))
   }
 
-  const setForecastVisibility = (forecastVisibility: boolean) => {
-    setState((prevState) => ({
-      ...prevState,
-      forecastVisibility
-    }))
-  }
-
   const value = useMemo(
     () => ({
       state,
-      setForecastVisibility,
       setIsLoadingUserCoordinates,
       setUserLocationCoordinates,
       setUserLocationInfo,
-      setSelectLocationCoordinates,
       setLocationPermissionState
     }),
     [state]

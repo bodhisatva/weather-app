@@ -5,12 +5,16 @@ import { Forecast } from '@/components/Forecast'
 import { SearchWeather } from '@/components/SearchWeather'
 import Weather from '@/components/Weather'
 import { useLocationContext } from '@/context/LocationContext'
+import { useState } from 'react'
 
 export default function Home() {
   const { state } = useLocationContext()
   const { locationPermission } = state
+  const [weatherDataVisibility, setWeatherDataVisibility] = useState(true)
 
   const renderComponent = locationPermission !== 'denied'
+
+  const visibility = `${weatherDataVisibility ? '' : 'hidden'}`
 
   return (
     <div className="container mx-auto py-2">
@@ -26,8 +30,8 @@ export default function Home() {
               <CurrentLocation />
             </div>
           </div>
-          <SearchWeather />
-          <div className="grid place-items-center mt-8 md:mt-28">
+          <SearchWeather setWeatherDataVisibility={setWeatherDataVisibility} />
+          <div className={`grid place-items-center mt-8 md:mt-28 ${visibility}`}>
             <Weather />
           </div>
         </div>
