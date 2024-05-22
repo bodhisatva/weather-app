@@ -19,9 +19,12 @@ export const ReactQueryClientProvider: FC<PropsWithChildren> = ({ children }) =>
   )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    // https://stackoverflow.com/questions/77788615/next-js-uncaught-syntaxerror-invalid-or-unexpected-token-then-chunkloaderror
+    <Suspense fallback={<SkeletonOneLine height="h-3" width="w-20" />}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Suspense>
   )
 }
