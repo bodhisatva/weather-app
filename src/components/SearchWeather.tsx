@@ -54,7 +54,7 @@ export const SearchWeather: FC<Props> = ({ visibility }) => {
       visibility(false)
       fetchCityInfo(inputValue)
     }
-  }, [fetchCityInfo, inputValue])
+  }, [fetchCityInfo, inputValue, visibility])
 
   const { refetch } = useFetchWeatherOnClick(lat, lon)
 
