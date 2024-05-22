@@ -11,7 +11,9 @@ export const Forecast: FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const { state } = useLocationContext()
-  const { userLocationCoordinates, loadingUserCoordinates } = state
+  const { userLocationCoordinates, loadingUserCoordinates, cityCoordinates } = state
+
+  const coord = cityCoordinates || userLocationCoordinates
 
   const fetchForecastData = useCallback(async (coordinates: Location) => {
     const { lat, lon } = coordinates
@@ -33,10 +35,10 @@ export const Forecast: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (userLocationCoordinates) {
-      fetchForecastData(userLocationCoordinates)
+    if (coord) {
+      fetchForecastData(coord)
     }
-  }, [fetchForecastData, userLocationCoordinates])
+  }, [fetchForecastData, coord])
 
   const renderComponent = !loading && forecastData && !loadingUserCoordinates
   const loadingComponent = loading || loadingUserCoordinates

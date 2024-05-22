@@ -32,7 +32,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
   const [cityOptions, setCityOptions] = useState<CityData[]>([])
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)
 
-  const { setUserLocationInfo, setUserLocationCoordinates, state } = useLocationContext()
+  const { setUserLocationInfo, setCityCoordinates, state } = useLocationContext()
   const { loadingUserCoordinates, userLocationCoordinates } = state
   const { lat, lon } = userLocationCoordinates
 
@@ -74,7 +74,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
 
     if (coord) {
       const { lat: latitude, lon: longitude } = coord
-      setUserLocationCoordinates({ lat: latitude, lon: longitude })
+      setCityCoordinates({ lat: latitude, lon: longitude })
       handleSubmit(city)
     }
   }

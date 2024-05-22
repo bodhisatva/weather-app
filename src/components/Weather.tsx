@@ -12,8 +12,8 @@ import { useFetchLocationData } from './hooks/useFetchLocationData'
 
 export const Weather: FC = () => {
   const { state } = useLocationContext()
-  const { userLocationCoordinates, loadingUserCoordinates } = state
-  const { lat, lon } = userLocationCoordinates
+  const { userLocationCoordinates, loadingUserCoordinates, cityCoordinates } = state
+  const { lat, lon } = cityCoordinates || userLocationCoordinates
 
   const { data, error } = useFetchWeather(lat, lon)
   const { data: locationData, error: locationError } = useFetchLocationData(lat, lon)
