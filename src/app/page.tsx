@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { CurrentLocation } from '@/components/CurrentLocation'
 import { Forecast } from '@/components/Forecast'
-import { SearchWeather } from '@/components/SearchWeather'
+import { LocationComboBox } from '@/components/LocationComboBox'
 import Weather from '@/components/Weather'
 import { useLocationContext } from '@/context/LocationContext'
 
@@ -30,7 +30,7 @@ export default function Home() {
               <CurrentLocation />
             </div>
           </div>
-          <SearchWeather visibility={setComponentVisibility} />
+          <LocationComboBox visibility={setComponentVisibility} />
           <div className={`grid place-items-center mt-8 md:mt-28 ${visibility}`}>
             <Weather />
           </div>

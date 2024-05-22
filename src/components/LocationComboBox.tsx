@@ -27,7 +27,7 @@ interface Props {
   visibility: (visibility: boolean) => void
 }
 
-export const SearchWeather: FC<Props> = ({ visibility }) => {
+export const LocationComboBox: FC<Props> = ({ visibility }) => {
   const [inputValue, setInputValue] = useState('')
   const [cityOptions, setCityOptions] = useState<CityData[]>([])
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)

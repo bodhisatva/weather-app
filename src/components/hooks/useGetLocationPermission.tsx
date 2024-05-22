@@ -36,5 +36,5 @@ export const useGetLocationPermission = () => {
     if (locationPermission === 'prompt') {
       promptLocationPermission()
     }
-  }, [])
+  }, [locationPermission, promptLocationPermission])
 }
