@@ -2,7 +2,8 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { FC, PropsWithChildren, useState } from 'react'
+import { FC, PropsWithChildren, Suspense, useState } from 'react'
+import { SkeletonOneLine } from '../skeleton/SkeletonOneLine'
 
 export const ReactQueryClientProvider: FC<PropsWithChildren> = ({ children }) => {
   const [queryClient] = useState(
@@ -10,8 +11,8 @@ export const ReactQueryClientProvider: FC<PropsWithChildren> = ({ children }) =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 6 * 100000,
-            refetchInterval: 6 * 100000
+            staleTime: 60 * 1000,
+            refetchInterval: 60 * 1000
           }
         }
       })
