@@ -40,4 +40,4 @@ yarn run cypress
 
 ###
 
-View project in **Vercel**: [https://weather-app-mauve-eight-31.vercel.app/](https://weather-app-mauve-eight-31.vercel.app/)
+View Weather Site in **Vercel**: [https://weather-app-mauve-eight-31.vercel.app/](https://weather-app-mauve-eight-31.vercel.app/)
