@@ -9,7 +9,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
   const query = `${WEATHER_API}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
 
   try {
-    const response = await fetch(query)
+    const response = await fetch(query, { next: { revalidate: 0 } })
     const data: LocationApiData = await response.json()
 
     const { name, sys } = data

@@ -15,7 +15,9 @@ const fetchLocation = async (lat: number, lon: number) => {
 
 export const useFetchUserLocation = (lat: number, lon: number) => {
   return useQuery({
-    queryKey: ['user-location'],
-    queryFn: () => fetchLocation(lat, lon)
+    queryKey: ['user-location', lat, lon],
+    queryFn: () => fetchLocation(lat, lon),
+    gcTime: 0,
+    staleTime: 0
   })
 }
