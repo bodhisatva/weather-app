@@ -12,7 +12,8 @@ describe('Forecast', () => {
   it('should show forecast for a selected city', () => {
     const city = 'Helsinki'
 
-    cy.get("[type='text']").type(city).type('{enter}', { force: true })
+    cy.get("[type='text']").type(city)
+    cy.get('div[class*="option"]').first().click()
 
     cy.dataCy('forecast').should('be.visible')
     cy.dataCy('current-city').should('be.visible').and('contain.text', city)
