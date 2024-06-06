@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
+import { Suspense, type ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { LocationContextProvider } from '@/context/LocationContext'
 import './globals.css'
 import { ReactQueryClientProvider } from '@/components/react-query-client/Provider'
+import { SkeletonOneLine } from '@/components/skeleton/SkeletonOneLine'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +24,9 @@ export default function RootLayout({
     <html className={`${backgroundOverlay} text-[#fff] min-h-screen`} lang="en">
       <body className={`${inter.className}`}>
         <ReactQueryClientProvider>
-          <LocationContextProvider>{children}</LocationContextProvider>
+          <Suspense fallback={<SkeletonOneLine height="h-3" width="w-20" />}>
+            <LocationContextProvider>{children}</LocationContextProvider>
+          </Suspense>
         </ReactQueryClientProvider>
       </body>
     </html>
