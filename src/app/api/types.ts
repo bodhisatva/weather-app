@@ -23,6 +23,7 @@ export interface ForecastApiData {
     rain?: {
       '3h': number
     }
+    dt_txt: string
   }[]
 }
 

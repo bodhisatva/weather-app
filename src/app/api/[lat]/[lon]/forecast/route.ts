@@ -18,8 +18,8 @@ export async function GET(request: NextRequest, context: ContextProps) {
     const response = await fetch(query, { next: { revalidate: 0 } })
     const daily: ForecastApiData = await response.json()
 
-    const temperaturesAtAfternoon = daily.list.filter(
-      ({ dt }) => format(new Date(dt * 1000), 'kk:mm') === '15:00'
+    const temperaturesInAfternoon = daily.list.filter(
+      ({ dt_txt }) => format(dt_txt, 'kk:mm') === '15:00'
     )
 
     const { dailyTemperatureList } = dailyTemperatures(daily)
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
       return formatClosestInteger(currentDate[0].max)
     }
 
-    const responseArray: ForecastData[] = temperaturesAtAfternoon.map(
+    const responseArray: ForecastData[] = temperaturesInAfternoon.map(
       ({ dt, main, weather, rain }) => {
         const date = format(new Date(dt * 1000), 'EEEE d.M')
         const { description } = weather[0]
