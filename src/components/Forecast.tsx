@@ -21,6 +21,7 @@ export const Forecast: FC = () => {
     try {
       setLoading(true)
 
+      // https://openweathermap.org/forecast5
       const response = await fetch(`/api/${lat}/${lon}/forecast`)
       const data: ForecastData[] = await response.json()
 
