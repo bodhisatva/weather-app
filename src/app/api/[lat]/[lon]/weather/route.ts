@@ -15,7 +15,9 @@ export async function GET(request: NextRequest, context: ContextProps) {
   const { lat, lon } = params
   const { WEATHER_API, API_KEY, WEATHER_API_FORECAST } = process.env
 
+  // https://openweathermap.org/current
   const currentWeatherQuery = `${WEATHER_API}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  // https://openweathermap.org/forecast5
   const forecastQuery = `${WEATHER_API_FORECAST}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
 
   try {

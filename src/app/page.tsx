@@ -13,7 +13,6 @@ export default function Home() {
   const [componentVisibility, setComponentVisibility] = useState(true)
 
   const renderComponent = locationPermission !== 'denied'
-
   const visibility = `${componentVisibility ? '' : 'hidden'}`
 
   return (

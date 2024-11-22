@@ -6,6 +6,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
   const { lon, lat } = params
   const { WEATHER_API, API_KEY } = process.env
 
+  // https://openweathermap.org/api/geocoding-api#description Reverse geocoding
   const query = `${WEATHER_API}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
 
   try {
