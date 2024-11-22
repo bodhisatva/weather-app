@@ -11,8 +11,8 @@ export const ReactQueryClientProvider: FC<PropsWithChildren> = ({ children }) =>
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000 * 60,
-            refetchInterval: 60 * 1000 * 60
+            staleTime: 60 * 1000 * 5, // 5 min
+            refetchInterval: 60 * 1000 * 5
           }
         }
       })
