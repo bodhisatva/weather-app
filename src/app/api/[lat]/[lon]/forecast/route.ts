@@ -8,7 +8,7 @@ import { capitaliseFirstCharacter } from '@/utility/formatStrings'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
-  const { lat, lon } = params
+  const { lat, lon } = await params
 
   const { WEATHER_API_FORECAST, API_KEY } = process.env
 

@@ -51,7 +51,7 @@ export interface LocationData {
 }
 
 export interface ContextProps {
-  params: Location
+  params: Promise<Location>
 }
 
 export interface Temperature {

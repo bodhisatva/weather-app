@@ -12,8 +12,12 @@ import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
-  const { lat, lon } = params
+  const { lat, lon } = await params
   const { WEATHER_API, API_KEY, WEATHER_API_FORECAST } = process.env
+
+  if (!WEATHER_API || !API_KEY || !WEATHER_API_FORECAST) {
+    throw new Error('Missing env variables')
+  }
 
   // https://openweathermap.org/current
   const currentWeatherQuery = `${WEATHER_API}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`

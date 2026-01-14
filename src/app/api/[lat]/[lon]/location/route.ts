@@ -3,7 +3,7 @@ import { ContextProps, LocationApiData, LocationData } from '@/app/api/types'
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
-  const { lon, lat } = params
+  const { lon, lat } = await params
   const { WEATHER_API, API_KEY } = process.env
 
   // https://openweathermap.org/api/geocoding-api#description Reverse geocoding
