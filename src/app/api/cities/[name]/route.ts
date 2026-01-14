@@ -5,9 +5,7 @@ import cities from './finland.cities.json'
 import { Location } from '@/app/api/types'
 
 interface ContextProps {
-  params: {
-    name: string
-  }
+  params: Promise<{ name: string }>
 }
 
 export interface CityData {
@@ -18,7 +16,7 @@ export interface CityData {
 
 export async function GET(request: NextRequest, context: ContextProps) {
   const { params } = context
-  const { name } = params
+  const { name } = await params
 
   const filteredCities = cities.filter((city) =>
     city.name.toLowerCase().includes(name.toLowerCase())
