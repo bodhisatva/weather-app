@@ -1,16 +1,14 @@
 /** @type {import('next').NextConfig} */
-import withPlugins from 'next-compose-plugins'
-import svgr from '@svgr/webpack'
 
 const nextConfig = {
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack']
-    })
-
-    return config
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js'
+      }
+    }
   }
 }
 
-export default withPlugins([], nextConfig)
+export default nextConfig
