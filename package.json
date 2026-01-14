@@ -10,27 +10,27 @@
     "cypress": "cypress open"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
     "@tanstack/react-query": "^5.37.1",
     "@tanstack/react-query-devtools": "^5.37.1",
     "@types/lodash": "^4.17.7",
     "cypress": "^13.14.2",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "fuse.js": "^7.0.0",
     "lodash": "^4.17.21",
     "next": "^16",
-    "next-compose-plugins": "^2.2.1",
     "react": "^19",
     "react-dom": "^19",
     "react-select": "^5.8.0",
-    "uuid": "^10.0.0"
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^5.56.1",
-    "@types/node": "^22.5.5",
+    "@types/node": "^25.0.8",
     "@types/react": "19",
     "@types/react-dom": "19",
-    "@types/uuid": "^10.0.0",
+    "@types/uuid": "^11.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.56.0",
@@ -45,8 +45,8 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.11",
-    "typescript": "5.5.4",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.5.4",
     "typescript-eslint": "^8.5.0"
   }
 }
