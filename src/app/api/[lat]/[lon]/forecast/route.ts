@@ -5,18 +5,20 @@ import { formatClosestInteger } from '@/utility/formatTemperature'
 import { ForecastApiData, ContextProps, ForecastData, Weather } from '@/app/api/types'
 import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
 import { capitaliseFirstCharacter } from '@/utility/formatStrings'
+import { assertValidCoordinates, fetchOpenWeather, toErrorResponse } from '@/app/api/openweather'
 
 export async function GET(request: NextRequest, context: ContextProps) {
-  const { params } = context
-  const { lat, lon } = await params
-
-  const { WEATHER_API_FORECAST, API_KEY } = process.env
-
-  const query = `${WEATHER_API_FORECAST}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-
   try {
-    const response = await fetch(query, { next: { revalidate: 0 } })
-    const daily: ForecastApiData = await response.json()
+    const { params } = context
+    const { lat, lon } = await params
+
+    assertValidCoordinates(lat, lon)
+
+    const daily = await fetchOpenWeather<ForecastApiData>(
+      process.env.WEATHER_API_FORECAST,
+      lat,
+      lon
+    )
 
     const temperaturesInAfternoon = daily.list.filter(
       ({ dt_txt }) => format(dt_txt, 'kk:mm') === '15:00'
@@ -72,9 +74,6 @@ export async function GET(request: NextRequest, context: ContextProps) {
 
     return Response.json(responseArray)
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
-    console.error('Error:', errorMessage)
-
-    return Response.json({ message: errorMessage })
+    return toErrorResponse(error)
   }
 }
