@@ -32,19 +32,19 @@ interface ContextProps {
 
 const LocationContext = createContext<ContextProps | null>(null)
 
+const defaultState: State = {
+  forecastVisibility: false,
+  loadingUserCoordinates: true,
+  locationPermission: 'prompt',
+  userLocationCoordinates: { lat: 60.1699, lon: 24.9384 },
+  cityCoordinates: null,
+  userCity: undefined,
+  userCountry: undefined
+}
+
 export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode }>> = ({
   children
 }) => {
-  const defaultState = {
-    forecastVisibility: false,
-    loadingUserCoordinates: false,
-    locationPermission: 'prompt' as PermissionState,
-    userLocationCoordinates: { lat: 60.1699, lon: 24.9384 },
-    cityCoordinates: null,
-    userCity: undefined,
-    userCountry: undefined
-  }
-
   const [state, setState] = useState<State>(defaultState)
 
   const setUserLocationCoordinates = (userLocationCoordinates: Location) => {

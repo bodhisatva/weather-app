@@ -12,6 +12,12 @@ export const useGetLocationPermission = () => {
   const { locationPermission } = state
 
   const promptLocationPermission = useCallback(async () => {
+    if (!('geolocation' in navigator)) {
+      setLocationPermissionState('denied')
+      setIsLoadingUserCoordinates(false)
+      return
+    }
+
     setIsLoadingUserCoordinates(true)
 
     navigator.geolocation.getCurrentPosition(
