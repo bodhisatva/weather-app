@@ -22,7 +22,7 @@ export const assertValidCoordinates = (lat: string, lon: string) => {
   const isValid = isValidCoordinate(lat, 90) && isValidCoordinate(lon, 180)
 
   if (!isValid) {
-    throw new HttpError(400, 'Invalid coordinated')
+    throw new HttpError(400, 'Invalid coordinates')
   }
 }
 

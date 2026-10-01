@@ -9,27 +9,20 @@ import {
   WeatherData
 } from '@/app/api/types'
 import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
+import { assertValidCoordinates, fetchOpenWeather, toErrorResponse } from '@/app/api/openweather'
 
 export async function GET(request: NextRequest, context: ContextProps) {
-  const { params } = context
-  const { lat, lon } = await params
-  const { WEATHER_API, API_KEY, WEATHER_API_FORECAST } = process.env
-
-  if (!WEATHER_API || !API_KEY || !WEATHER_API_FORECAST) {
-    throw new Error('Missing env variables')
-  }
-
-  // https://openweathermap.org/current
-  const currentWeatherQuery = `${WEATHER_API}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-  // https://openweathermap.org/forecast5
-  const forecastQuery = `${WEATHER_API_FORECAST}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-
   try {
-    const currentWeatherResponse = await fetch(currentWeatherQuery, { next: { revalidate: 0 } })
-    const currentData: WeatherApiData = await currentWeatherResponse.json()
+    const { params } = context
+    const { lat, lon } = await params
 
-    const response = await fetch(forecastQuery, { next: { revalidate: 0 } })
-    const forecastData: ForecastApiData = await response.json()
+    assertValidCoordinates(lat, lon)
+
+    // https://openweathermap.org/current and https://openweathermap.org/forecast5
+    const [currentData, forecastData] = await Promise.all([
+      fetchOpenWeather<WeatherApiData>(process.env.WEATHER_API, lat, lon),
+      fetchOpenWeather<ForecastApiData>(process.env.WEATHER_API_FORECAST, lat, lon)
+    ])
 
     const { main, weather, rain } = currentData
     const { temp } = main
@@ -65,9 +58,6 @@ export async function GET(request: NextRequest, context: ContextProps) {
 
     return Response.json(responseObject)
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
-    console.error('Error:', errorMessage)
-
-    return Response.json({ message: errorMessage })
+    return toErrorResponse(error)
   }
 }
