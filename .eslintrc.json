@@ -25,5 +25,13 @@
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],
     "react/function-component-definition": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["cypress.config.ts", "cypress/**"],
+      "rules": {
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+      }
+    }
+  ]
 }
