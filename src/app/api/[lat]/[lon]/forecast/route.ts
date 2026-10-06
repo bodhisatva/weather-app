@@ -1,8 +1,7 @@
 import { type NextRequest } from 'next/server'
 import { format } from 'date-fns'
-import { v4 as uuidv4 } from 'uuid'
 import { formatClosestInteger } from '@/utility/formatTemperature'
-import { ForecastApiData, ContextProps, ForecastData, Weather } from '@/app/api/types'
+import { ForecastApiData, ContextProps, ForecastData } from '@/app/api/types'
 import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
 import { capitaliseFirstCharacter } from '@/utility/formatStrings'
 import { assertValidCoordinates, fetchOpenWeather, toErrorResponse } from '@/app/api/openweather'
@@ -26,47 +25,22 @@ export async function GET(request: NextRequest, context: ContextProps) {
 
     const { dailyTemperatureList } = dailyTemperatures(daily)
 
-    const dailyMinAndMaXTemperatures = Object.entries(dailyTemperatureList).map(
-      ([date, temperatures]) => {
-        return {
-          date,
-          min: Math.min(...temperatures),
-          max: Math.max(...temperatures)
-        }
-      }
-    )
-
-    const mapWeatherIcon = (weather: Weather[]) => {
-      const { icon } = weather[0]
-
-      return icon
-    }
-
-    const findMinTemperature = (date: string) => {
-      const currentDate = dailyMinAndMaXTemperatures.filter(({ date: day }) => day === date)
-      return formatClosestInteger(currentDate[0].min)
-    }
-
-    const findMaxTemperature = (date: string) => {
-      const currentDate = dailyMinAndMaXTemperatures.filter(({ date: day }) => day === date)
-      return formatClosestInteger(currentDate[0].max)
-    }
-
     const responseArray: ForecastData[] = temperaturesInAfternoon.map(
       ({ dt, main, weather, rain }) => {
         const date = format(new Date(dt * 1000), 'EEEE d.M')
-        const { description } = weather[0]
+        const { description, icon } = weather[0]
+        const temperatures = dailyTemperatureList[date]
 
         return {
-          id: uuidv4(),
+          id: String(dt),
           date,
           description: capitaliseFirstCharacter(description),
           temperatures: {
             day: formatClosestInteger(main.temp),
-            min: findMinTemperature(date),
-            max: findMaxTemperature(date)
+            min: formatClosestInteger(Math.min(...temperatures)),
+            max: formatClosestInteger(Math.max(...temperatures))
           },
-          icon: mapWeatherIcon(weather),
+          icon,
           rain: rain?.['3h'] || 0
         }
       }
