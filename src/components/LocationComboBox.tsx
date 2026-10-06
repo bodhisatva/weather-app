@@ -10,7 +10,6 @@ import CancelIcon from 'public/icons/cancel.svg'
 import { CityData } from '@/app/api/cities/[name]/route'
 import { useLocationContext } from '@/context/LocationContext'
 import { Location } from '@/app/api/types'
-import { useFetchWeatherOnClick } from './hooks/useFetchWeatherOnClick'
 
 interface SelectedCity {
   label: string
@@ -33,8 +32,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)
 
   const { setUserLocationInfo, setCityCoordinates, state } = useLocationContext()
-  const { loadingUserCoordinates, userLocationCoordinates } = state
-  const { lat, lon } = userLocationCoordinates
+  const { loadingUserCoordinates } = state
 
   const fetchCityInfo = useCallback(async (value: string) => {
     try {
@@ -56,10 +54,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     }
   }, [fetchCityInfo, inputValue, visibility])
 
-  const { refetch } = useFetchWeatherOnClick(lat, lon)
-
   const handleSubmit = ({ label, country }: CityData) => {
-    refetch()
     visibility(true)
 
     setCityOptions([])
