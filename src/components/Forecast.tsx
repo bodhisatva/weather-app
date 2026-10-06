@@ -35,12 +35,12 @@ export const Forecast: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (coord && !loadingUserCoordinates) {
+    if (!loadingUserCoordinates) {
       fetchForecastData(coord)
     }
   }, [fetchForecastData, coord, loadingUserCoordinates])
 
-  const renderComponent = !loading && forecastData && !loadingUserCoordinates
+  const renderComponent = !loading && forecastData
   const loadingComponent = loading || loadingUserCoordinates
 
   return (
