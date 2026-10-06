@@ -13,12 +13,9 @@ import { Location } from '@/app/api/types'
 
 interface State {
   cityCoordinates: Location | null
-  forecastVisibility: boolean
   loadingUserCoordinates: boolean
   locationPermission: PermissionState
   userLocationCoordinates: Location
-  userCity: string | undefined
-  userCountry: string | undefined
 }
 
 interface ContextProps {
@@ -26,20 +23,16 @@ interface ContextProps {
   setIsLoadingUserCoordinates: (loading: boolean) => void
   setUserLocationCoordinates: (coordinates: Location) => void
   setCityCoordinates: (coordinates: Location) => void
-  setUserLocationInfo: (city: string, country: string) => void
   setLocationPermissionState: (locationPermission: PermissionState) => void
 }
 
 const LocationContext = createContext<ContextProps | null>(null)
 
 const defaultState: State = {
-  forecastVisibility: false,
   loadingUserCoordinates: true,
   locationPermission: 'prompt',
   userLocationCoordinates: { lat: 60.1699, lon: 24.9384 },
-  cityCoordinates: null,
-  userCity: undefined,
-  userCountry: undefined
+  cityCoordinates: null
 }
 
 export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode }>> = ({
@@ -75,21 +68,12 @@ export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode
     }))
   }
 
-  const setUserLocationInfo = (userCity: string, userCountry: string) => {
-    setState((prevState) => ({
-      ...prevState,
-      userCity,
-      userCountry
-    }))
-  }
-
   const value = useMemo(
     () => ({
       state,
       setCityCoordinates,
       setIsLoadingUserCoordinates,
       setUserLocationCoordinates,
-      setUserLocationInfo,
       setLocationPermissionState
     }),
     [state]

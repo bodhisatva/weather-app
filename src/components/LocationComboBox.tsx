@@ -31,7 +31,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
   const [cityOptions, setCityOptions] = useState<CityData[]>([])
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)
 
-  const { setUserLocationInfo, setCityCoordinates, state } = useLocationContext()
+  const { setCityCoordinates, state } = useLocationContext()
   const { loadingUserCoordinates } = state
 
   const fetchCityInfo = useCallback(async (value: string) => {
@@ -54,14 +54,12 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     }
   }, [fetchCityInfo, inputValue, visibility])
 
-  const handleSubmit = ({ label, country }: CityData) => {
+  const handleSubmit = () => {
     visibility(true)
 
     setCityOptions([])
     setInputValue('')
     setSelectedCity(null)
-
-    setUserLocationInfo(label, country)
   }
 
   const onChangeHandler = (city: CityData) => {
@@ -70,7 +68,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     if (coord) {
       const { lat: latitude, lon: longitude } = coord
       setCityCoordinates({ lat: latitude, lon: longitude })
-      handleSubmit(city)
+      handleSubmit()
     }
   }
 
