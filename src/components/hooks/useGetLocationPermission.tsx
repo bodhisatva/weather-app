@@ -18,8 +18,6 @@ export const useGetLocationPermission = () => {
       return
     }
 
-    setIsLoadingUserCoordinates(true)
-
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         setIsLoadingUserCoordinates(false)
