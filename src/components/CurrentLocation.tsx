@@ -8,16 +8,22 @@ export const CurrentLocation: FC = () => {
   useGetLocationPermission()
 
   const { state } = useLocationContext()
-  const { locationPermission, userLocationCoordinates, loadingUserCoordinates } = state
+  const { locationPermission, userLocationCoordinates } = state
   const { lat, lon } = userLocationCoordinates
 
-  const { data, error } = useFetchUserLocation(lat, lon)
+  const enabled = locationPermission === 'granted'
+
+  const { data, error } = useFetchUserLocation(lat, lon, enabled)
+
+  if (locationPermission === 'denied') {
+    return null
+  }
 
   if (error) {
     return <div>An error occured: {error.message}</div>
   }
 
-  if (!data || loadingUserCoordinates) {
+  if (!data) {
     return (
       <div className="flex w-full justify-end">
         <SkeletonOneLine height="h-3" width="w-20" />
@@ -27,15 +33,9 @@ export const CurrentLocation: FC = () => {
 
   const { cityName, country } = data
 
-  const renderComponent = locationPermission === 'granted'
-
   return (
-    <div>
-      {renderComponent && (
-        <div data-cy="current-location" className="flex w-full">
-          <div className="flex w-full justify-end">{`${cityName}, ${country}`}</div>
-        </div>
-      )}
+    <div data-cy="current-location" className="flex w-full">
+      <div className="flex w-full justify-end">{`${cityName}, ${country}`}</div>
     </div>
   )
 }

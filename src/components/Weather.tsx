@@ -15,14 +15,16 @@ export const Weather: FC = () => {
   const { userLocationCoordinates, loadingUserCoordinates, cityCoordinates } = state
   const { lat, lon } = cityCoordinates || userLocationCoordinates
 
-  const { data, error } = useFetchWeather(lat, lon)
-  const { data: locationData, error: locationError } = useFetchLocationData(lat, lon)
+  const enabled = !loadingUserCoordinates
+
+  const { data, error } = useFetchWeather(lat, lon, enabled)
+  const { data: locationData, error: locationError } = useFetchLocationData(lat, lon, enabled)
 
   if (error || locationError) {
     return <div>An error occured: {error?.message}</div>
   }
 
-  if (!data || !locationData || loadingUserCoordinates) {
+  if (!data || !locationData) {
     return <CurrentWeatherSkeleton />
   }
 

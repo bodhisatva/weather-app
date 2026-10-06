@@ -13,10 +13,11 @@ const fetchLocation = async (lat: number, lon: number) => {
   }
 }
 
-export const useFetchUserLocation = (lat: number, lon: number) => {
+export const useFetchUserLocation = (lat: number, lon: number, enabled = true) => {
   return useQuery({
     queryKey: ['user-location', lat, lon],
     queryFn: () => fetchLocation(lat, lon),
+    enabled,
     gcTime: 0,
     staleTime: 0
   })
