@@ -40,16 +40,6 @@ export interface ForecastData {
   rain?: number
 }
 
-export interface LocationApiData {
-  name: string
-  sys: { country: string }
-}
-
-export interface LocationData {
-  cityName: string
-  country: string
-}
-
 export interface ContextProps {
   params: Promise<{ lat: string; lon: string }>
 }
@@ -66,6 +56,10 @@ interface Rain {
 }
 
 export interface WeatherApiData {
+  name: string
+  sys: {
+    country: string
+  }
   main: Main
   weather: {
     description: string
@@ -75,6 +69,8 @@ export interface WeatherApiData {
 }
 
 export interface WeatherData {
+  cityName: string
+  country: string
   formattedTemperatures: Temperature
   weatherDescription: string
   rain: Rain | null | undefined

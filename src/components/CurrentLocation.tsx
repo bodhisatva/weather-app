@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useGetLocationPermission } from './hooks/useGetLocationPermission'
 import { SkeletonOneLine } from './skeleton/SkeletonOneLine'
 import { useLocationContext } from '@/context/LocationContext'
-import { useFetchLocationData } from './hooks/useFetchLocationData'
+import { useFetchWeather } from './hooks/useFetchWeather'
 
 export const CurrentLocation: FC = () => {
   useGetLocationPermission()
@@ -13,7 +13,7 @@ export const CurrentLocation: FC = () => {
 
   const enabled = locationPermission === 'granted'
 
-  const { data, error } = useFetchLocationData(lat, lon, enabled)
+  const { data, error } = useFetchWeather(lat, lon, enabled)
 
   if (locationPermission === 'denied') {
     return null

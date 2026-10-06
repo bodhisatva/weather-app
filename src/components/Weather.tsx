@@ -8,7 +8,6 @@ import { useLocationContext } from '@/context/LocationContext'
 import { createIcon } from '@/utility/mapWeatherIcon'
 import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
 import { useFetchWeather } from './hooks/useFetchWeather'
-import { useFetchLocationData } from './hooks/useFetchLocationData'
 
 export const Weather: FC = () => {
   const { state } = useLocationContext()
@@ -18,20 +17,17 @@ export const Weather: FC = () => {
   const enabled = !loadingUserCoordinates
 
   const { data, error } = useFetchWeather(lat, lon, enabled)
-  const { data: locationData, error: locationError } = useFetchLocationData(lat, lon, enabled)
 
-  if (error || locationError) {
-    return <div>An error occured: {error?.message}</div>
+  if (error) {
+    return <div>An error occured: {error.message}</div>
   }
 
-  if (!data || !locationData) {
+  if (!data) {
     return <CurrentWeatherSkeleton />
   }
 
-  const { formattedTemperatures, weatherDescription, rain, icon } = data
+  const { cityName, formattedTemperatures, weatherDescription, rain, icon } = data
   const { temperature, minTemperature, maxTemperature } = formattedTemperatures
-
-  const { cityName } = locationData
 
   const weatherIcon = createIcon(icon)
 

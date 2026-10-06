@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
       fetchOpenWeather<ForecastApiData>(process.env.WEATHER_API_FORECAST, lat, lon)
     ])
 
-    const { main, weather, rain } = currentData
+    const { name, sys, main, weather, rain } = currentData
     const { temp } = main
     const { description, icon } = weather[0]
 
@@ -50,6 +50,8 @@ export async function GET(request: NextRequest, context: ContextProps) {
     }
 
     const responseObject: WeatherData = {
+      cityName: name,
+      country: sys.country,
       formattedTemperatures,
       weatherDescription: capitaliseFirstCharacter(description),
       rain,
