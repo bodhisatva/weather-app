@@ -1,4 +1,3 @@
-
 <br/>
 
 <p align="center"  style="border-radius: 10px;">
@@ -15,7 +14,6 @@ First, create a free account on [OpenWeather](https://openweathermap.org/appid).
 
 Create **.env.local** file in the project root and add variables. Replace the value of **API_KEY** with your account's API key.
 
-
 ```bash
 API_KEY={your-open-weather-map API key}
 WEATHER_API=https://api.openweathermap.org/data/2.5/weather
@@ -25,7 +23,7 @@ WEATHER_API_FORECAST=https://api.openweathermap.org/data/2.5/forecast
 To start the project run:
 
 ```bash
-yarn run dev
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -35,7 +33,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 To run **e2e** test:
 
 ```bash
-yarn run cypress
+pnpm run cypress
 ```
 
 ###
