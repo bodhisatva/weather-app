@@ -11,7 +11,7 @@ export const useGetLocationPermission = () => {
 
   const { locationPermission } = state
 
-  const promptLocationPermission = useCallback(async () => {
+  const promptLocationPermission = useCallback(() => {
     if (!('geolocation' in navigator)) {
       setLocationPermissionState('denied')
       setIsLoadingUserCoordinates(false)
@@ -34,8 +34,7 @@ export const useGetLocationPermission = () => {
         setIsLoadingUserCoordinates(false)
       }
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [setIsLoadingUserCoordinates, setLocationPermissionState, setUserLocationCoordinates])
 
   useEffect(() => {
     if (locationPermission === 'prompt') {

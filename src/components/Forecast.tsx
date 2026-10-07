@@ -29,9 +29,8 @@ export const Forecast: FC = () => {
       }
     } catch (error) {
       console.error('Error:', error)
-    } finally {
-      setLoading(false)
     }
+    setLoading(false)
   }, [])
 
   useEffect(() => {
