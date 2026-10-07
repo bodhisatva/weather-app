@@ -1,9 +1,9 @@
 'use client'
 
 import { FC } from 'react'
-import MaxTempIcon from 'public/icons/thermometer.svg'
-import MinTempIcon from 'public/icons/thermometer-minus.svg'
-import Rain from 'public/icons/rain.svg'
+import MaxTempIcon from '@/icons/thermometer.svg'
+import MinTempIcon from '@/icons/thermometer-minus.svg'
+import Rain from '@/icons/rain.svg'
 import { useLocationContext } from '@/context/LocationContext'
 import { createIcon } from '@/utility/mapWeatherIcon'
 import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
