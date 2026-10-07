@@ -1,14 +1,6 @@
 'use client'
 
-import {
-  FC,
-  PropsWithChildren,
-  createContext,
-  useMemo,
-  useState,
-  useContext,
-  ReactNode
-} from 'react'
+import { FC, createContext, useMemo, useState, useContext, ReactNode } from 'react'
 import { Location } from '@/app/api/types'
 
 interface State {
@@ -35,9 +27,7 @@ const defaultState: State = {
   cityCoordinates: null
 }
 
-export const LocationContextProvider: FC<PropsWithChildren<{ children: ReactNode }>> = ({
-  children
-}) => {
+export const LocationContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<State>(defaultState)
 
   const setUserLocationCoordinates = (userLocationCoordinates: Location) => {
