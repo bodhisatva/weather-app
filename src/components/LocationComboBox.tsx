@@ -73,7 +73,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
   }
 
   const ValueContainer = useMemo(() => {
-    return ({ children, ...props }: ValueContainerProps) => {
+    return function ValueContainer({ children, ...props }: ValueContainerProps) {
       const cancelOnClickHandler = () => {
         setCityOptions([])
         setInputValue('')
