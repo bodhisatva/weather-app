@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
 'use client'
 
 import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
