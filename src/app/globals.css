@@ -1,9 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --text-50: 50px;
   --text-50--line-height: 1;
-  --color-w-blue: #2B3C5A;
-  --color-w-silver-blue: #4E4A53;
-  --color-w-border: #4F6A94;
+  --color-w-blue: #2b3c5a;
+  --color-w-silver-blue: #4e4a53;
+  --color-w-border: #4f6a94;
 }
