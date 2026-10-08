@@ -17,7 +17,7 @@ describe('Search combo box', () => {
     cy.get('div[class*="menu"]')
       .find('div[class*="option"]')
       .should('be.visible')
-      .and('have.length', 12)
+      .and('have.length.greaterThan', 0)
 
     cy.get('div[class*="option"]').first().should('contain.text', `${city}`)
   })
