@@ -13,6 +13,7 @@ import { useFetchCities } from './hooks/useFetchCities'
 
 interface SelectedCity {
   label: string
+  details: string
   country: string
   coord: Location | undefined
 }
@@ -108,8 +109,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     paddingRight: '3rem'
   })
 
-  const formatOptionLabel = (data: unknown): ReactNode => {
-    const { label } = data as CityData
+  const highlightMatch = (label: string): ReactNode => {
     const startOfMatch = label.toLowerCase().indexOf(inputValue.toLowerCase())
     const enfOfMatch = startOfMatch + inputValue.length
 
@@ -124,9 +124,19 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
       </span>
     )
     const lastPartOfLabelText = label.substring(enfOfMatch)
-    const labelWithBoldedMatch = [firstPartOfLabeltext, boldedText, lastPartOfLabelText]
 
-    return <span>{labelWithBoldedMatch}</span>
+    return [firstPartOfLabeltext, boldedText, lastPartOfLabelText]
+  }
+
+  const formatOptionLabel = (data: unknown): ReactNode => {
+    const { label, details } = data as CityData
+
+    return (
+      <div>
+        <div>{highlightMatch(label)}</div>
+        {details && <div className="text-xs opacity-60">{details}</div>}
+      </div>
+    )
   }
 
   return (
@@ -140,6 +150,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
         }}
         isDisabled={loadingUserCoordinates}
         options={cityOptions}
+        filterOption={null}
         isLoading={isFetching}
         value={selectedCity}
         onFocus={() => visibility(false)}

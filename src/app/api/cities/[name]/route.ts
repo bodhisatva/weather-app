@@ -7,6 +7,7 @@ interface ContextProps {
 
 export interface CityData {
   label: string
+  details: string
   country: string
   coord: Location | undefined
 }
@@ -16,12 +17,19 @@ interface GeocodingResult {
   latitude: number
   longitude: number
   country_code: string
+  country?: string
   admin1?: string
 }
 
 const GEOCODING_URL = 'https://geocoding-api.open-meteo.com/v1/search'
 
-export async function GET(request: NextRequest, { params }: ContextProps) {
+const normalize = (text: string) =>
+  text
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase()
+
+export async function GET(_request: NextRequest, { params }: ContextProps) {
   const { name } = await params
   const url = new URL(GEOCODING_URL)
 
@@ -37,15 +45,18 @@ export async function GET(request: NextRequest, { params }: ContextProps) {
 
   const { results = [] }: { results?: GeocodingResult[] } = await response.json()
 
-  const cities: CityData[] = results.map(
-    ({ name: cityName, admin1, country_code, latitude, longitude }) => ({
-      label: [cityName, admin1, country_code].filter(Boolean).join(', '),
+  const cities: CityData[] = results
+    .filter(({ name: cityName }) => normalize(cityName).includes(normalize(name)))
+    .map(({ name: cityName, admin1, country, country_code, latitude, longitude }) => ({
+      label: cityName,
+      details: [admin1, country].filter(Boolean).join(', '),
       country: country_code,
       coord: { lat: latitude, lon: longitude }
-    })
-  )
+    }))
 
-  const uniqueCities = [...new Map(cities.map((city) => [city.label, city])).values()]
+  const uniqueCities = [
+    ...new Map(cities.map((city) => [`${city.label}-${city.details}`, city])).values()
+  ]
 
   return Response.json(uniqueCities)
 }
