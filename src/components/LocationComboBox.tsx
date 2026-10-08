@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, ReactNode, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { CSSObjectWithLabel, components, ValueContainerProps } from 'react-select'
 import SearchIcon from '@/icons/search.svg'
@@ -8,6 +8,8 @@ import CancelIcon from '@/icons/cancel.svg'
 import { CityData } from '@/app/api/cities/[name]/route'
 import { useLocationContext } from '@/context/LocationContext'
 import { Location } from '@/app/api/types'
+import { useDebouncedValue } from './hooks/useDebouncedValue'
+import { useFetchCities } from './hooks/useFetchCities'
 
 interface SelectedCity {
   label: string
@@ -26,36 +28,25 @@ interface Props {
 
 export const LocationComboBox: FC<Props> = ({ visibility }) => {
   const [inputValue, setInputValue] = useState('')
-  const [cityOptions, setCityOptions] = useState<CityData[]>([])
   const [selectedCity, setSelectedCity] = useState<SelectedCity | null>(null)
+
+  const debouncedInput = useDebouncedValue(inputValue, 250)
+  const { data: cityOptions = [], isFetching } = useFetchCities(debouncedInput)
 
   const { setCityCoordinates, state } = useLocationContext()
   const { loadingUserCoordinates } = state
 
-  const fetchCityInfo = useCallback(async (value: string) => {
-    try {
-      const response = await fetch(`/api/cities/${value}`)
-      const data: CityData[] = await response.json()
+  const onInputChange = (value: string) => {
+    setInputValue(value)
 
-      if (data) {
-        setCityOptions(data)
-      }
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (inputValue) {
+    if (value) {
       visibility(false)
-      fetchCityInfo(inputValue)
     }
-  }, [fetchCityInfo, inputValue, visibility])
+  }
 
   const handleSubmit = () => {
     visibility(true)
 
-    setCityOptions([])
     setInputValue('')
     setSelectedCity(null)
   }
@@ -73,7 +64,6 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
   const ValueContainer = useMemo(() => {
     return function ValueContainer({ children, ...props }: ValueContainerProps) {
       const cancelOnClickHandler = () => {
-        setCityOptions([])
         setInputValue('')
         setSelectedCity(null)
       }
@@ -88,7 +78,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
         )
       )
     }
-  }, [setCityOptions, setInputValue, setSelectedCity])
+  }, [setInputValue, setSelectedCity])
 
   const styles = (base: CSSObjectWithLabel) => ({
     ...base,
@@ -150,10 +140,11 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
         }}
         isDisabled={loadingUserCoordinates}
         options={cityOptions}
+        isLoading={isFetching}
         value={selectedCity}
         onFocus={() => visibility(false)}
         onChange={(city) => onChangeHandler(city as CityData)}
-        onInputChange={setInputValue}
+        onInputChange={onInputChange}
         placeholder="Search city..."
         components={{ ValueContainer, DropdownIndicator, IndicatorSeparator }}
         formatOptionLabel={formatOptionLabel}
