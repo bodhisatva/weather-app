@@ -16,6 +16,7 @@ interface ContextProps {
   setIsLoadingUserCoordinates: (loading: boolean) => void
   setUserLocationCoordinates: (coordinates: Location) => void
   setCityCoordinates: (coordinates: Location, label: string) => void
+  clearCityCoordinates: () => void
   setLocationPermissionState: (locationPermission: PermissionState) => void
 }
 
@@ -61,10 +62,19 @@ export const LocationContextProvider: FC<{ children: ReactNode }> = ({ children 
     }))
   }
 
+  const clearCityCoordinates = () => {
+    setState((prevState) => ({
+      ...prevState,
+      cityCoordinates: null,
+      cityName: null
+    }))
+  }
+
   const value = useMemo(
     () => ({
       state,
       setCityCoordinates,
+      clearCityCoordinates,
       setIsLoadingUserCoordinates,
       setUserLocationCoordinates,
       setLocationPermissionState

@@ -40,7 +40,6 @@ export const Weather: FC = () => {
         {temperature}
       </div>
       <div className="mt-2 font-bold text-50" data-cy="current-city">
-        su
         {selectedCityName ?? cityName}
       </div>
       <div className="flex flex-row items-center gap-2 pt-2 pb-6">

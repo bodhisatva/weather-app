@@ -7,8 +7,8 @@ import { useFetchWeather } from './hooks/useFetchWeather'
 export const CurrentLocation: FC = () => {
   useGetLocationPermission()
 
-  const { state } = useLocationContext()
-  const { locationPermission, userLocationCoordinates } = state
+  const { state, clearCityCoordinates } = useLocationContext()
+  const { locationPermission, userLocationCoordinates, cityCoordinates } = state
   const { lat, lon } = userLocationCoordinates
 
   const enabled = locationPermission === 'granted'
@@ -32,10 +32,20 @@ export const CurrentLocation: FC = () => {
   }
 
   const { cityName, country } = data
+  const countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(country) ?? country
 
   return (
     <div data-cy="current-location" className="flex w-full">
-      <div className="flex w-full justify-end">{`${cityName}, ${country}`}</div>
+      <div className="flex w-full justify-end">
+        <button
+          type="button"
+          onClick={clearCityCoordinates}
+          disabled={!cityCoordinates}
+          className="transition-opacity enabled:cursor-pointer enabled:hover:opacity-70 focus-visible:outline"
+        >
+          {`${cityName}, ${countryName}`}
+        </button>
+      </div>
     </div>
   )
 }
