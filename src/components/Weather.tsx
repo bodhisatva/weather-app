@@ -1,13 +1,11 @@
 'use client'
 
 import { FC } from 'react'
-import MaxTempIcon from '@/icons/thermometer.svg'
-import MinTempIcon from '@/icons/thermometer-minus.svg'
 import Rain from '@/icons/rain.svg'
 import { useLocationContext } from '@/context/LocationContext'
-import { createIcon } from '@/utility/mapWeatherIcon'
 import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
 import { useFetchWeather } from './hooks/useFetchWeather'
+import { createIcon } from '@/utility/mapWeatherIcon'
 
 export const Weather: FC = () => {
   const { state } = useLocationContext()
@@ -51,10 +49,10 @@ export const Weather: FC = () => {
       <div className="flex items-center mb-3 text-sm">Forecast</div>
       <div className="flex flex-row space-x-4 ">
         <div className="flex items-center">
-          <MaxTempIcon className="mr-1" /> <span>Max: {maxTemperature}</span>
+          <span>High: {maxTemperature}</span>
         </div>
         <div className="flex items-center">
-          <MinTempIcon className="mr-1" /> <span>Min: {minTemperature}</span>
+          <span>Low: {minTemperature}</span>
         </div>
         <div>
           {rain ? (
