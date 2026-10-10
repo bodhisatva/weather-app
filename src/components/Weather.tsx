@@ -42,26 +42,24 @@ export const Weather: FC = () => {
       <div className="font-bold text-50" data-cy="current-city">
         {selectedCityName ?? cityName}
       </div>
-      <div className="flex flex-row pt-2 pb-6">
-        <div className="flex items-center">{weatherIcon}</div>
-        <div className="text-lg font-semibold ml-2">{weatherDescription}</div>
+      <div className="flex flex-row items-center gap-2 pt-2 pb-6">
+        {weatherIcon}
+        <div className="text-lg font-medium">{weatherDescription}</div>
       </div>
-      <div className="flex items-center mb-3 text-sm">Forecast</div>
-      <div className="flex flex-row space-x-4 ">
+      <div className="mb-2 text-xs uppercase tracking-wide opacity-70">Forecast</div>
+      <div className="flex flex-row gap-4">
         <div className="flex items-center">
           <span>High: {maxTemperature}</span>
         </div>
         <div className="flex items-center">
           <span>Low: {minTemperature}</span>
         </div>
-        <div>
-          {rain ? (
-            <div className="flex items-center">
-              <Rain className="mr-1" />
-              <span>Rain: {rain['1h']} mm</span>
-            </div>
-          ) : null}
-        </div>
+        {rain ? (
+          <div className="flex items-center">
+            <Rain className="mr-1" />
+            <span>Rain: {rain['1h']} mm</span>
+          </div>
+        ) : null}
       </div>
     </>
   )
