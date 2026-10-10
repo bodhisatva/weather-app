@@ -39,7 +39,8 @@ export const Weather: FC = () => {
       <div className="font-bold text-50" data-cy="current-temperature">
         {temperature}
       </div>
-      <div className="font-bold text-50" data-cy="current-city">
+      <div className="mt-2 font-bold text-50" data-cy="current-city">
+        su
         {selectedCityName ?? cityName}
       </div>
       <div className="flex flex-row items-center gap-2 pt-2 pb-6">
@@ -48,12 +49,14 @@ export const Weather: FC = () => {
       </div>
       <div className="mb-2 text-xs uppercase tracking-wide opacity-70">Forecast</div>
       <div className="flex flex-row gap-4">
-        <div className="flex items-center">
-          <span>High: {maxTemperature}</span>
-        </div>
-        <div className="flex items-center">
-          <span>Low: {minTemperature}</span>
-        </div>
+        {maxTemperature === minTemperature ? (
+          <span>Around {maxTemperature}</span>
+        ) : (
+          <>
+            <span>High: {maxTemperature}</span>
+            <span>Low: {minTemperature}</span>
+          </>
+        )}
         {rain ? (
           <div className="flex items-center">
             <Rain className="mr-1" />

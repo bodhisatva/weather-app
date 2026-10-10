@@ -75,14 +75,14 @@ export const Forecast: FC = () => {
                     <div className="flex items-center mb-3 basis-1/3">
                       <MaxTempIcon className="mr-1" />
                     </div>
-                    <div className="basis-1/3">Max: {max}</div>
+                    <div className="basis-1/3">High: {max}</div>
                   </div>
                   <div className="flex flex-row w-full">
                     <div className="basis-2/3" />
                     <div className="flex items-center mb-3 basis-1/3">
                       <MinTempIcon className="mr-1" />
                     </div>
-                    <div className="basis-1/3">Min: {min}</div>
+                    <div className="basis-1/3">Low: {min}</div>
                   </div>
 
                   {rain ? (
