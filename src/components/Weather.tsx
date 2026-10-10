@@ -11,7 +11,12 @@ import { useFetchWeather } from './hooks/useFetchWeather'
 
 export const Weather: FC = () => {
   const { state } = useLocationContext()
-  const { userLocationCoordinates, loadingUserCoordinates, cityCoordinates } = state
+  const {
+    userLocationCoordinates,
+    loadingUserCoordinates,
+    cityCoordinates,
+    cityName: selectedCityName
+  } = state
   const { lat, lon } = cityCoordinates || userLocationCoordinates
 
   const enabled = !loadingUserCoordinates
@@ -37,7 +42,7 @@ export const Weather: FC = () => {
         {temperature}
       </div>
       <div className="font-bold text-50" data-cy="current-city">
-        {cityName}
+        {selectedCityName ?? cityName}
       </div>
       <div className="flex flex-row pt-2 pb-6">
         <div className="flex items-center">{weatherIcon}</div>

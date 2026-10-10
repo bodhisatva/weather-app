@@ -53,11 +53,11 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
   }
 
   const onChangeHandler = (city: CityData) => {
-    const { coord } = city
+    const { coord, label } = city
 
     if (coord) {
       const { lat: latitude, lon: longitude } = coord
-      setCityCoordinates({ lat: latitude, lon: longitude })
+      setCityCoordinates({ lat: latitude, lon: longitude }, label)
       handleSubmit()
     }
   }

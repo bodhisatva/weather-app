@@ -5,6 +5,7 @@ import { Location } from '@/app/api/types'
 
 interface State {
   cityCoordinates: Location | null
+  cityName: string | null
   loadingUserCoordinates: boolean
   locationPermission: PermissionState
   userLocationCoordinates: Location
@@ -14,17 +15,18 @@ interface ContextProps {
   state: State
   setIsLoadingUserCoordinates: (loading: boolean) => void
   setUserLocationCoordinates: (coordinates: Location) => void
-  setCityCoordinates: (coordinates: Location) => void
+  setCityCoordinates: (coordinates: Location, label: string) => void
   setLocationPermissionState: (locationPermission: PermissionState) => void
 }
 
 const LocationContext = createContext<ContextProps | null>(null)
 
 const defaultState: State = {
+  cityCoordinates: null,
+  cityName: null,
   loadingUserCoordinates: true,
   locationPermission: 'prompt',
-  userLocationCoordinates: { lat: 60.1699, lon: 24.9384 },
-  cityCoordinates: null
+  userLocationCoordinates: { lat: 60.1699, lon: 24.9384 }
 }
 
 export const LocationContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
@@ -51,10 +53,11 @@ export const LocationContextProvider: FC<{ children: ReactNode }> = ({ children 
     }))
   }
 
-  const setCityCoordinates = (cityCoordinates: Location) => {
+  const setCityCoordinates = (cityCoordinates: Location, cityName: string) => {
     setState((prevState) => ({
       ...prevState,
-      cityCoordinates
+      cityCoordinates,
+      cityName
     }))
   }
 
