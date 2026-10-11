@@ -48,7 +48,7 @@ export const Weather: FC = () => {
         {weatherIcon}
         <div className="text-lg font-medium">{weatherDescription}</div>
       </div>
-      <div className="mb-2 text-xs uppercase tracking-wide opacity-70">Forecast</div>
+      <div className="mb-2 text-xs uppercase tracking-wide opacity-80">Forecast</div>
       <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
         {maxTemperature === minTemperature ? (
           <span>Around {maxTemperature}</span>
@@ -58,7 +58,7 @@ export const Weather: FC = () => {
             <span>Low: {minTemperature}</span>
           </div>
         )}
-        {rain ? <span className="text-sm opacity-70">Rain {rain['1h'].toFixed(1)} mm</span> : null}
+        {rain ? <span className="text-sm opacity-80">Rain {rain['1h'].toFixed(1)} mm</span> : null}
       </div>
     </>
   )

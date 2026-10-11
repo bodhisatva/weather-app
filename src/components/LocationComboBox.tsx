@@ -81,11 +81,16 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     }
   }, [setInputValue, setSelectedCity])
 
-  const styles = (base: CSSObjectWithLabel) => ({
+  const styles = (base: CSSObjectWithLabel, controlState: { isFocused: boolean }) => ({
     ...base,
     borderRadius: '24px',
     height: '3rem',
-    padding: '0 1rem'
+    padding: '0 1rem',
+    borderColor: controlState.isFocused ? '#8fd3d6' : base.borderColor,
+    boxShadow: controlState.isFocused ? '0 0 0 2px #8fd3d6' : base.boxShadow,
+    '&:hover': {
+      borderColor: controlState.isFocused ? '#8fd3d6' : base.borderColor
+    }
   })
 
   const option = (provided: CSSObjectWithLabel, optionState: { isFocused: boolean }) => ({
@@ -151,7 +156,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     return (
       <div>
         <div>{highlightMatch(label)}</div>
-        {details && <div className="text-xs opacity-60">{details}</div>}
+        {details && <div className="text-xs opacity-80">{details}</div>}
       </div>
     )
   }
@@ -160,7 +165,7 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     <div>
       <Select
         styles={{
-          control: (base) => styles(base),
+          control: (base, controlState) => styles(base, controlState),
           option: (provided, optionState) => option(provided, optionState),
           menu: (provided) => menu(provided),
           menuList: (provided) => menuList(provided),

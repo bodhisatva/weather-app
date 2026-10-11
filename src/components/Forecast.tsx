@@ -67,7 +67,7 @@ export const Forecast: FC = () => {
                   <div className="basis-2/3 flex flex-col gap-2">
                     <div className="flex items-baseline gap-2">
                       <span className="text-lg font-semibold">{weekday}</span>
-                      <span className="text-sm opacity-70">{dayMonth}</span>
+                      <span className="text-sm opacity-80">{dayMonth}</span>
                     </div>
                     <div className="flex flex-row items-center gap-2 text-xs">
                       {Icon}
@@ -75,15 +75,15 @@ export const Forecast: FC = () => {
                     </div>
                   </div>
                   <dl className="basis-2/3 grid grid-cols-2 gap-y-3">
-                    <dt className="opacity-70">Day</dt>
+                    <dt className="opacity-80">Day</dt>
                     <dd className="text-lg font-semibold">{temperature}</dd>
-                    <dt className="opacity-70">High</dt>
+                    <dt className="opacity-80">High</dt>
                     <dd>{max}</dd>
-                    <dt className="opacity-70">Low</dt>
+                    <dt className="opacity-80">Low</dt>
                     <dd>{min}</dd>
                     {rain ? (
                       <>
-                        <dt className="opacity-70">Rain</dt>
+                        <dt className="opacity-80">Rain</dt>
                         <dd>{rain} mm</dd>
                       </>
                     ) : null}
