@@ -57,13 +57,18 @@ export const Forecast: FC = () => {
           {forecastData.map(({ id, date, temperatures, rain, icon, description }) => {
             const { day: temperature, min, max } = temperatures
 
+            const [weekday, dayMonth] = date.split(' ')
+
             const Icon = createIcon(icon)
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>
                 <div className="border border-w-border rounded-[15px] p-4 flex flex-row">
                   <div className="basis-2/3 flex flex-col gap-2">
-                    <div>{date}</div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-lg font-semibold">{weekday}</span>
+                      <span className="text-sm opacity-70">{dayMonth}</span>
+                    </div>
                     <div className="flex flex-row items-center gap-2 text-xs">
                       {Icon}
                       <span>{description}</span>
@@ -71,7 +76,7 @@ export const Forecast: FC = () => {
                   </div>
                   <dl className="basis-2/3 grid grid-cols-2 gap-y-3">
                     <dt className="opacity-70">Day</dt>
-                    <dd>{temperature}</dd>
+                    <dd className="text-lg font-semibold">{temperature}</dd>
                     <dt className="opacity-70">High</dt>
                     <dd>{max}</dd>
                     <dt className="opacity-70">Low</dt>
