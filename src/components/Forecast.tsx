@@ -1,7 +1,4 @@
 import { FC, useCallback, useEffect, useState } from 'react'
-import Rain from '@/icons/rain.svg'
-import MaxTempIcon from '@/icons/thermometer.svg'
-import MinTempIcon from '@/icons/thermometer-minus.svg'
 import { useLocationContext } from '@/context/LocationContext'
 import { ForecastData, Location } from '@/app/api/types'
 import { createIcon } from '@/utility/mapWeatherIcon'
@@ -64,36 +61,28 @@ export const Forecast: FC = () => {
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>
-                <div className="border border-[#4F6A94] rounded-[15px] pt-4 px-4">
-                  <div className="flex flex-row w-full">
-                    <div className="basis-2/3">{date}</div>
-                    <div className="flex items-center mb-3 basis-1/3">{Icon}</div>
-                    <div className="basis-1/3">{temperature}</div>
-                  </div>
-                  <div className="flex flex-row w-full">
-                    <div className="basis-2/3 text-xs">{description}</div>
-                    <div className="flex items-center mb-3 basis-1/3">
-                      <MaxTempIcon className="mr-1" />
+                <div className="border border-w-border rounded-[15px] p-4 flex flex-row">
+                  <div className="basis-2/3 flex flex-col gap-2">
+                    <div>{date}</div>
+                    <div className="flex flex-row items-center gap-2 text-xs">
+                      {Icon}
+                      <span>{description}</span>
                     </div>
-                    <div className="basis-1/3">High: {max}</div>
                   </div>
-                  <div className="flex flex-row w-full">
-                    <div className="basis-2/3" />
-                    <div className="flex items-center mb-3 basis-1/3">
-                      <MinTempIcon className="mr-1" />
-                    </div>
-                    <div className="basis-1/3">Low: {min}</div>
-                  </div>
-
-                  {rain ? (
-                    <div className="flex flex-row w-full mb-4">
-                      <div className="basis-2/3" />
-                      <div className="flex items-center basis-1/3">
-                        <Rain className="mr-1" />
-                      </div>
-                      <div className="basis-1/3">{`Rain ${rain} mm`}</div>
-                    </div>
-                  ) : null}
+                  <dl className="basis-2/3 grid grid-cols-2 gap-y-3">
+                    <dt className="opacity-70">Day</dt>
+                    <dd>{temperature}</dd>
+                    <dt className="opacity-70">High</dt>
+                    <dd>{max}</dd>
+                    <dt className="opacity-70">Low</dt>
+                    <dd>{min}</dd>
+                    {rain ? (
+                      <>
+                        <dt className="opacity-70">Rain</dt>
+                        <dd>{rain} mm</dd>
+                      </>
+                    ) : null}
+                  </dl>
                 </div>
               </div>
             )
