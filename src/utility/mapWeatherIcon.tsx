@@ -41,6 +41,23 @@ export const createIcon = (iconCode: string) => {
   return <Icon />
 }
 
+const iconColors: Record<string, string> = {
+  '01d': '[&>svg]:fill-amber-200',
+  '01n': '[&>svg]:fill-indigo-100',
+  '02d': '[&>svg]:fill-amber-50',
+  '02n': '[&>svg]:fill-indigo-100',
+  '03': '[&>svg]:fill-slate-100',
+  '04': '[&>svg]:fill-slate-100',
+  '09': '[&>svg]:fill-sky-200',
+  '10': '[&>svg]:fill-sky-200',
+  '11': '[&>svg]:fill-amber-200',
+  '13': '[&>svg]:fill-cyan-100',
+  '50': '[&>svg]:fill-slate-100'
+}
+
+export const weatherIconColor = (iconCode: string) =>
+  iconColors[iconCode] ?? iconColors[iconCode.slice(0, 2)] ?? ''
+
 const iconAnimations: Record<string, string> = {
   '01d': 'motion-safe:animate-spin-slow',
   '01n': 'motion-safe:animate-sway',

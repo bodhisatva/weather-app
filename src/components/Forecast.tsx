@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { useLocationContext } from '@/context/LocationContext'
 import { ForecastData, Location } from '@/app/api/types'
-import { createIcon } from '@/utility/mapWeatherIcon'
+import { createIcon, weatherIconColor } from '@/utility/mapWeatherIcon'
 
 export const Forecast: FC = () => {
   const [forecastData, setForecastData] = useState<ForecastData[] | null>(null)
@@ -70,7 +70,7 @@ export const Forecast: FC = () => {
                       <span className="text-sm opacity-80">{dayMonth}</span>
                     </div>
                     <div className="flex flex-row items-center gap-2 text-xs">
-                      {Icon}
+                      <div className={`flex ${weatherIconColor(icon)}`}>{Icon}</div>
                       <span>{description}</span>
                     </div>
                   </div>

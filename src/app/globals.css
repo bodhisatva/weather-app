@@ -7,7 +7,7 @@
   --color-w-silver-blue: #2f6a72;
   --color-w-border: #4f8f96;
 
-  --animate-spin-slow: spin 20s linear infinite;
+  --animate-spin-slow: spin 12s linear infinite;
   --animate-sway: sway 6s ease-in-out infinite;
   --animate-drift: drift 6s ease-in-out infinite;
   --animate-bob: bob 3s ease-in-out infinite;
@@ -16,10 +16,10 @@
   @keyframes sway {
     0%,
     100% {
-      transform: rotate(-4deg);
+      transform: rotate(-8deg);
     }
     50% {
-      transform: rotate(4deg);
+      transform: rotate(8deg);
     }
   }
 
@@ -29,7 +29,7 @@
       transform: translateX(0);
     }
     50% {
-      transform: translateX(3px);
+      transform: translateX(6px);
     }
   }
 
@@ -39,21 +39,20 @@
       transform: translateY(0);
     }
     50% {
-      transform: translateY(2px);
+      transform: translateY(4px);
     }
   }
 
   @keyframes flicker {
     0%,
-    90%,
+    86%,
+    92%,
     100% {
       opacity: 1;
     }
-    93% {
-      opacity: 0.6;
-    }
-    96% {
-      opacity: 1;
+    89%,
+    95% {
+      opacity: 0.4;
     }
   }
 }

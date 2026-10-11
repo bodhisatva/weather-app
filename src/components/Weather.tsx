@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { useLocationContext } from '@/context/LocationContext'
 import { CurrentWeatherSkeleton } from './skeleton/CurrentWeatherSkeleton'
 import { useFetchWeather } from './hooks/useFetchWeather'
-import { createIcon, weatherIconAnimation } from '@/utility/mapWeatherIcon'
+import { createIcon, weatherIconAnimation, weatherIconColor } from '@/utility/mapWeatherIcon'
 
 export const Weather: FC = () => {
   const { state } = useLocationContext()
@@ -45,7 +45,11 @@ export const Weather: FC = () => {
         {selectedCityName ?? cityName}
       </div>
       <div className="flex flex-row items-center gap-2 pt-2 pb-6">
-        <div className={`flex ${weatherIconAnimation(icon)}`}>{weatherIcon}</div>
+        <div
+          className={`flex [&>svg]:size-8 ${weatherIconColor(icon)} ${weatherIconAnimation(icon)}`}
+        >
+          {weatherIcon}
+        </div>
         <div className="text-lg font-medium">{weatherDescription}</div>
       </div>
       <div className="mb-2 text-xs uppercase tracking-wide opacity-80">Forecast</div>
