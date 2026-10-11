@@ -88,19 +88,36 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
     padding: '0 1rem'
   })
 
-  const option = (provided: CSSObjectWithLabel, optionState: { isSelected: boolean }) => ({
+  const option = (provided: CSSObjectWithLabel, optionState: { isFocused: boolean }) => ({
     ...provided,
-    color: optionState.isSelected ? 'black' : '#fff',
-    backgroundColor: 'transparent',
-    cursor: 'pointer'
+    color: '#fff',
+    backgroundColor: optionState.isFocused ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
+    borderRadius: '12px',
+    margin: '0 0.5rem',
+    width: 'auto',
+    padding: '0.5rem 2.5rem',
+    cursor: 'pointer',
+    ':active': {
+      backgroundColor: 'rgba(255, 255, 255, 0.14)'
+    }
   })
 
   const menu = (provided: CSSObjectWithLabel) => ({
     ...provided,
-    backgroundColor: 'transparent',
-    border: 'none',
-    boxShadow: 'none',
-    paddingLeft: '3rem'
+    marginTop: '0.5rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    border: '1px solid rgba(255, 255, 255, 0.12)',
+    borderRadius: '20px',
+    boxShadow: '0 12px 32px rgba(0, 0, 0, 0.3)',
+    backdropFilter: 'blur(12px)',
+    overflow: 'hidden'
+  })
+
+  const menuList = (provided: CSSObjectWithLabel) => ({
+    ...provided,
+    padding: '0.5rem 0',
+    scrollbarWidth: 'thin' as const,
+    scrollbarColor: 'rgba(255, 255, 255, 0.25) transparent'
   })
 
   const noOptionsMessage = (provided: CSSObjectWithLabel) => ({
@@ -146,12 +163,14 @@ export const LocationComboBox: FC<Props> = ({ visibility }) => {
           control: (base) => styles(base),
           option: (provided, optionState) => option(provided, optionState),
           menu: (provided) => menu(provided),
+          menuList: (provided) => menuList(provided),
           noOptionsMessage: (provided) => noOptionsMessage(provided)
         }}
         isDisabled={loadingUserCoordinates}
         options={cityOptions}
         filterOption={null}
         isLoading={isFetching}
+        maxMenuHeight={360}
         value={selectedCity}
         onFocus={() => visibility(false)}
         onChange={(city) => onChangeHandler(city as CityData)}

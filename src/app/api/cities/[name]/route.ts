@@ -34,7 +34,7 @@ export async function GET(_request: NextRequest, { params }: ContextProps) {
   const url = new URL(GEOCODING_URL)
 
   url.searchParams.set('name', name)
-  url.searchParams.set('count', '10')
+  url.searchParams.set('count', '6')
   url.searchParams.set('language', 'en')
 
   const response = await fetch(url, { next: { revalidate: 86400 } })
