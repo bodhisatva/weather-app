@@ -63,7 +63,7 @@ export const Forecast: FC = () => {
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>
-                <div className="border border-w-border rounded-[15px] p-4 flex flex-row">
+                <div className="border border-w-border rounded-[15px] bg-white/5 p-4 flex flex-row">
                   <div className="basis-2/3 flex flex-col gap-2">
                     <div className="flex items-baseline gap-2">
                       <span className="text-lg font-semibold">{weekday}</span>
