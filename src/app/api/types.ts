@@ -5,6 +5,7 @@ export interface Main {
 }
 
 export type Weather = {
+  id: number
   main: string
   icon: string
   description: string
@@ -40,6 +41,7 @@ export interface ForecastData {
     max: string
   }
   icon: string
+  conditionId: number
   rain?: number
 }
 
@@ -65,6 +67,7 @@ export interface WeatherApiData {
   }
   main: Main
   weather: {
+    id: number
     description: string
     icon: string
   }[]
@@ -78,4 +81,5 @@ export interface WeatherData {
   weatherDescription: string
   rain: Rain | null | undefined
   icon: string
+  conditionId: number
 }

@@ -8,6 +8,7 @@ import Mist from '@/icons/mist.svg'
 import Moon from '@/icons/clear-night.svg'
 import PartlyCloudyNight from '@/icons/partly-cloudy-night.svg'
 import Showers from '@/icons/rainy-light.svg'
+import Overcast from '@/icons/cloudy.svg'
 import { FC, SVGProps } from 'react'
 
 const mapWeatherIconCode = (iconCode: string) => {
@@ -35,8 +36,8 @@ const mapWeatherIconCode = (iconCode: string) => {
   return iconMap[iconCode]
 }
 
-export const createIcon = (iconCode: string) => {
-  const Icon = mapWeatherIconCode(iconCode) || Sun
+export const createIcon = (iconCode: string, conditionId?: number) => {
+  const Icon = conditionId === 804 ? Overcast : mapWeatherIconCode(iconCode) || Sun
 
   return <Icon />
 }

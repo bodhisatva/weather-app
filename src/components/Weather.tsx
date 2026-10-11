@@ -28,10 +28,10 @@ export const Weather: FC = () => {
     return <CurrentWeatherSkeleton />
   }
 
-  const { cityName, formattedTemperatures, weatherDescription, rain, icon } = data
+  const { cityName, formattedTemperatures, weatherDescription, rain, icon, conditionId } = data
   const { temperature, minTemperature, maxTemperature } = formattedTemperatures
 
-  const weatherIcon = createIcon(icon)
+  const weatherIcon = createIcon(icon, conditionId)
 
   return (
     <>

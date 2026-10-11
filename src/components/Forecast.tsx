@@ -54,12 +54,12 @@ export const Forecast: FC = () => {
           >
             Upcoming Days
           </div>
-          {forecastData.map(({ id, date, temperatures, rain, icon, description }) => {
+          {forecastData.map(({ id, date, temperatures, rain, icon, conditionId, description }) => {
             const { day: temperature, min, max } = temperatures
 
             const [weekday, dayMonth] = date.split(' ')
 
-            const Icon = createIcon(icon)
+            const Icon = createIcon(icon, conditionId)
 
             return (
               <div className="mb-4" data-cy="forecast-day" key={id}>

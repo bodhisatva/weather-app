@@ -26,7 +26,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
 
     const { name, sys, main, weather, rain } = currentData
     const { temp } = main
-    const { description, icon } = weather[0]
+    const { id: conditionId, description, icon } = weather[0]
 
     const { dailyTemperatureList } = dailyTemperatures(forecastData)
 
@@ -55,7 +55,8 @@ export async function GET(request: NextRequest, context: ContextProps) {
       formattedTemperatures,
       weatherDescription: capitaliseFirstCharacter(description),
       rain,
-      icon
+      icon,
+      conditionId
     }
 
     return Response.json(responseObject)

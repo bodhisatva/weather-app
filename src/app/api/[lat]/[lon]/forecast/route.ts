@@ -48,7 +48,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
       .slice(0, 5)
       .map(({ dt, main, weather, rain }) => {
         const date = formatDayLabel(toLocalDate(dt, timezone))
-        const { description, icon } = weather[0]
+        const { id: conditionId, description, icon } = weather[0]
         const temperatures = dailyTemperatureList[date]
 
         return {
@@ -61,6 +61,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
             max: formatClosestInteger(Math.max(...temperatures))
           },
           icon,
+          conditionId,
           rain: rain?.['3h'] || 0
         }
       })
