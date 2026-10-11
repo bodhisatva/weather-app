@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Suspense, type ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { LocationContextProvider } from '@/context/LocationContext'
@@ -9,8 +9,17 @@ import { SkeletonOneLine } from '@/components/skeleton/SkeletonOneLine'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Weather App',
-  description: 'Weather app for checking the weather forecast'
+  title: 'Weather app',
+  description: 'Weather app for checking the weather forecast',
+  appleWebApp: {
+    title: 'Weather app',
+    statusBarStyle: 'black-translucent'
+  }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#2f6a72',
+  viewportFit: 'cover'
 }
 
 export default function RootLayout({
@@ -22,7 +31,9 @@ export default function RootLayout({
 
   return (
     <html className={`${backgroundOverlay} text-[#fff] min-h-screen`} lang="en">
-      <body className={`${inter.className}`}>
+      <body
+        className={`${inter.className} pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]`}
+      >
         <ReactQueryClientProvider>
           <Suspense fallback={<SkeletonOneLine height="h-3" width="w-20" />}>
             <LocationContextProvider>{children}</LocationContextProvider>

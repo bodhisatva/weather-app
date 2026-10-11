@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Weather Site',
-    short_name: 'Weather',
+    name: 'Weather app',
+    short_name: 'Weather app',
     start_url: '/',
     display: 'standalone',
     background_color: '#1d3f4f',
