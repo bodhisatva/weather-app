@@ -25,6 +25,9 @@ export interface ForecastApiData {
     }
     dt_txt: string
   }[]
+  city: {
+    timezone: number
+  }
 }
 
 export interface ForecastData {

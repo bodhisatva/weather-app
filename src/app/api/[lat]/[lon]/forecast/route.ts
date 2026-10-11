@@ -1,8 +1,7 @@
 import { type NextRequest } from 'next/server'
-import { format } from 'date-fns'
 import { formatClosestInteger } from '@/utility/formatTemperature'
 import { ForecastApiData, ContextProps, ForecastData } from '@/app/api/types'
-import { dailyTemperatures } from '@/utility/mapDailyTemperatures'
+import { dailyTemperatures, formatDayLabel, toLocalDate } from '@/utility/mapDailyTemperatures'
 import { capitaliseFirstCharacter } from '@/utility/formatStrings'
 import { assertValidCoordinates, fetchOpenWeather, toErrorResponse } from '@/app/api/openweather'
 
@@ -19,15 +18,36 @@ export async function GET(request: NextRequest, context: ContextProps) {
       lon
     )
 
-    const temperaturesInAfternoon = daily.list.filter(
-      ({ dt_txt }) => format(dt_txt, 'kk:mm') === '15:00'
-    )
+    const { timezone } = daily.city
+
+    const distanceFromAfternoon = (dt: number) => {
+      const localDate = toLocalDate(dt, timezone)
+      return Math.abs(localDate.getUTCHours() + localDate.getUTCMinutes() / 60 - 14)
+    }
+
+    const afternoonSlots = new Map<string, ForecastApiData['list'][number]>()
+
+    daily.list.forEach((slot) => {
+      const distance = distanceFromAfternoon(slot.dt)
+
+      if (distance > 2) {
+        return
+      }
+
+      const date = formatDayLabel(toLocalDate(slot.dt, timezone))
+      const current = afternoonSlots.get(date)
+
+      if (!current || distance < distanceFromAfternoon(current.dt)) {
+        afternoonSlots.set(date, slot)
+      }
+    })
 
     const { dailyTemperatureList } = dailyTemperatures(daily)
 
-    const responseArray: ForecastData[] = temperaturesInAfternoon.map(
-      ({ dt, main, weather, rain }) => {
-        const date = format(new Date(dt * 1000), 'EEEE d.M')
+    const responseArray: ForecastData[] = [...afternoonSlots.values()]
+      .slice(0, 5)
+      .map(({ dt, main, weather, rain }) => {
+        const date = formatDayLabel(toLocalDate(dt, timezone))
         const { description, icon } = weather[0]
         const temperatures = dailyTemperatureList[date]
 
@@ -43,8 +63,7 @@ export async function GET(request: NextRequest, context: ContextProps) {
           icon,
           rain: rain?.['3h'] || 0
         }
-      }
-    )
+      })
 
     return Response.json(responseArray)
   } catch (error) {
