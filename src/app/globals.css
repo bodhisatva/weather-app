@@ -6,4 +6,54 @@
   --color-w-blue: #1d3f4f;
   --color-w-silver-blue: #2f6a72;
   --color-w-border: #4f8f96;
+
+  --animate-spin-slow: spin 20s linear infinite;
+  --animate-sway: sway 6s ease-in-out infinite;
+  --animate-drift: drift 6s ease-in-out infinite;
+  --animate-bob: bob 3s ease-in-out infinite;
+  --animate-flicker: flicker 4s ease-in-out infinite;
+
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-4deg);
+    }
+    50% {
+      transform: rotate(4deg);
+    }
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(3px);
+    }
+  }
+
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(2px);
+    }
+  }
+
+  @keyframes flicker {
+    0%,
+    90%,
+    100% {
+      opacity: 1;
+    }
+    93% {
+      opacity: 0.6;
+    }
+    96% {
+      opacity: 1;
+    }
+  }
 }

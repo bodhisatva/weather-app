@@ -40,3 +40,19 @@ export const createIcon = (iconCode: string) => {
 
   return <Icon />
 }
+
+const iconAnimations: Record<string, string> = {
+  '01d': 'motion-safe:animate-spin-slow',
+  '01n': 'motion-safe:animate-sway',
+  '02': 'motion-safe:animate-drift',
+  '03': 'motion-safe:animate-drift',
+  '04': 'motion-safe:animate-drift',
+  '09': 'motion-safe:animate-bob',
+  '10': 'motion-safe:animate-bob',
+  '11': 'motion-safe:animate-flicker',
+  '13': 'motion-safe:animate-bob',
+  '50': 'motion-safe:animate-drift'
+}
+
+export const weatherIconAnimation = (iconCode: string) =>
+  iconAnimations[iconCode] ?? iconAnimations[iconCode.slice(0, 2)] ?? ''
